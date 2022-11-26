@@ -1,0 +1,125 @@
+var selectedCell;
+
+var numberBtn = document.getElementsByClassName("number-btn");
+var parentGrid = document.getElementById("parent-grid");
+
+var testPuzzle = [
+    1,2,3,0,0,0,0,8,9,
+    1,2,0,8,4,6,8,9,5,
+    1,0,3,0,5,6,0,8,9,
+    1,2,3,0,5,6,7,0,9,
+    1,2,3,4,0,6,0,8,9,
+    1,2,0,4,5,0,7,8,9,
+    1,0,3,0,5,0,7,0,9,
+    1,2,3,4,0,6,7,0,9,
+    1,0,3,4,5,6,7,8,9
+]
+
+
+//Start up
+generateTable();
+
+function generateTable() {
+
+
+    var cellNumber = 0;
+    var parentGridHTML = '';
+        //Outer rows
+        for(i = 0; i < 3; i++){
+            parentGridHTML += '<div class="row">';
+            //Inner Containers
+            for(j = 0; j < 3; j++){
+                parentGridHTML += '<div class="container">';
+                //Inner Rows
+                for(k = 0; k < 3; k++){
+                    parentGridHTML += '<div class="row">';
+                    //Individual Cells
+                    for(c = 0; c < 3; c++){                      
+                        parentGridHTML += '<div class="cell" ><p class="input-text">';
+                        var cellValue = testPuzzle[cellNumber];
+                        if(cellValue != 0){
+                            parentGridHTML += cellValue;
+                           
+                        }
+                        // parentGridHTML += cellNumber;
+                        parentGridHTML +=  '</p></div>';
+                        cellNumber++;
+                    }
+                    parentGridHTML += '</div>';
+                }
+                parentGridHTML += '</div>';
+            }
+        
+            parentGridHTML += '</div>';
+        }
+    
+
+        parentGrid.innerHTML = parentGridHTML;
+
+}
+
+
+document.addEventListener("keydown", event => {
+   
+
+    switch (event.key ) {
+        case "9" :
+            setValue(9);
+            break;
+        case "8" :
+            setValue(8);
+            break;  
+        case "7" :
+            setValue(7);
+            break;  
+        case "6" :
+            setValue(6);
+            break;  
+        case "5" :
+            setValue(5);
+            break;  
+        case "4" :
+            setValue(4);
+            break;  
+        case "3" :
+            setValue(3);
+            break;  
+        case "2" :
+            setValue(2);
+            break;  
+        case "1" :
+            setValue(1);
+            break;  
+        
+    }
+})
+
+
+var cells =  document.querySelectorAll(".cell").forEach(cell => {
+    
+    cell.addEventListener("click", event => 
+
+    {
+        selectCell(cell);
+
+       
+    })
+})
+
+function setValue(number) {
+    if(selectedCell != null){
+        selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
+    }
+}
+
+
+
+function selectCell(cell){
+    if(selectedCell != null) {
+        selectedCell.classList.remove("active");
+
+    }
+    selectedCell = cell;
+    cell.classList.add("active");
+    
+}
