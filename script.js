@@ -46,7 +46,6 @@ function generateTable() {
 
     //used for cell navigation through numbering cells by row (r-1, r-2 .. )and colums (c-1, c-2, c-3) within the class list
     var currRow = 1;
-    var colOffset = 0;
 
     var tableFactor = 3;
         //Outer rows
@@ -60,10 +59,10 @@ function generateTable() {
                 //Inner Rows
                 for(k = 0; k < tableFactor; k++){
                     var innerRowNumber = k +1;
-                    parentGridHTML += '<div class="row"name = "' + innerRowNumber + '" ' + '>';
+                    parentGridHTML += '<div class="row">';
                     //Individual Cells
                     for(c = 0; c < tableFactor; c++){                      
-                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol + '"><p class="input-text" id="' + cellNumber + '" >';
+                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol +  '" name="' + testPuzzle[cellNumber] +'"><p class="input-text" id="' + cellNumber + '" >';
                         var cellValue = testPuzzle[cellNumber];
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
@@ -103,8 +102,6 @@ function generateTable() {
 
 
 document.addEventListener("keydown", event => {
-   
-
     switch (event.key ) {
         case "9" :
             setValue(9);
@@ -138,14 +135,10 @@ document.addEventListener("keydown", event => {
 })
 
 
-var cells =  document.querySelectorAll(".cell").forEach(cell => {
-    
+var cells =  document.querySelectorAll(".cell").forEach(cell => {   
     cell.addEventListener("click", event => 
-
     {
-        selectCell(cell);
-
-       
+        selectCell(cell);      
     })
 })
 
@@ -156,11 +149,13 @@ function setValue(number) {
         if(selectedCell != null){
             if(valueElement.innerHTML == ""){
                 selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
-    
+                
+                selectedCell.attributes["name"].value = number;
             }else{
                 showMessage("Can't fill a pre-filled cell");
             }
         }
+        detectDuplicates();
         checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
     }else {
         showMessage("Made too many mistakes")
@@ -190,7 +185,22 @@ function selectCell(cell){
     cell.classList.add("active");
     
     detectCellRowColumn(cell);
+    detectDuplicates();
 
+}
+
+function detectDuplicates(){
+    var valueElement =  selectedCell.attributes["name"].value;
+    document.querySelectorAll(".cell.duplicate").forEach((duplicate) =>{
+        duplicate.classList.remove("duplicate");
+    });
+    if(valueElement != 0){
+        
+        var duplicates = document.getElementsByName(valueElement);
+        duplicates.forEach((duplicate)=>{
+            duplicate.classList.add("duplicate");
+        });
+    }
 }
 
 
@@ -238,6 +248,10 @@ function checkCell (index, currValue, cell) {
 
     }else if(c){}
 }
+
+
+
+
 
 
 //Check for a win scenario
