@@ -1,4 +1,5 @@
 var selectedCell;
+var selectedContainer;
 
 var numberBtn = document.getElementsByClassName("number-btn");
 var parentGrid = document.getElementById("parent-grid");
@@ -35,7 +36,7 @@ function generateTable() {
                     parentGridHTML += '<div class="row">';
                     //Individual Cells
                     for(c = 0; c < 3; c++){                      
-                        parentGridHTML += '<div class="cell" ><p class="input-text">';
+                        parentGridHTML += '<div class="cell" name = "' + cellNumber + '" ' + '><p class="input-text">';
                         var cellValue = testPuzzle[cellNumber];
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
@@ -140,12 +141,20 @@ function selectCell(cell){
     }
     selectedCell = cell;
     cell.classList.add("active");
+    detectContainer(cell);
     
 }
 
 
-function detectCell(){
+function detectContainer(cell){
 
+    var container = cell.parentElement.parentElement;
+    if(selectedContainer != null){
+        selectedContainer.classList.remove("highlighted");
+    }
+
+    selectedContainer = container;
+    container.classList.add("highlighted");
 }
 
 
