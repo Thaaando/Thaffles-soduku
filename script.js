@@ -25,18 +25,24 @@ function generateTable() {
 
     var cellNumber = 0;
     var parentGridHTML = '';
+
+    //used for cell navigation through numbering cells by row (r-1, r-2 .. )and colums (c-1, c-2, c-3) within the class list
+    var currRow = 1;
+    var rowOffset = 0;
+    var currCol = 1;
         //Outer rows
         for(i = 0; i < 3; i++){
             parentGridHTML += '<div class="row">';
             //Inner Containers
             for(j = 0; j < 3; j++){
-                parentGridHTML += '<div class="container">';
+                parentGridHTML += '<div class="container unfocused">';
                 //Inner Rows
                 for(k = 0; k < 3; k++){
-                    parentGridHTML += '<div class="row">';
+                    var innerRowNumber = k +1;
+                    parentGridHTML += '<div class="row"name = "' + innerRowNumber + '" ' + '>';
                     //Individual Cells
                     for(c = 0; c < 3; c++){                      
-                        parentGridHTML += '<div class="cell" name = "' + cellNumber + '" ' + '><p class="input-text">';
+                        parentGridHTML += '<div class="cell r-' + currRow + '" ' + '><p class="input-text">';
                         var cellValue = testPuzzle[cellNumber];
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
@@ -49,14 +55,22 @@ function generateTable() {
                         cellNumber++;
                     }
                     parentGridHTML += '</div>';
+                    currRow++;
+                    
+                    if((currRow-1)%3==0){
+                        
+                        currRow -= 3;
+                    }
                 }
                 parentGridHTML += '</div>';
+                if(j == 2){
+                    currRow += 3;
+
+                }
             }
-        
+
             parentGridHTML += '</div>';
         }
-    
-
         parentGrid.innerHTML = parentGridHTML;
 
 }
@@ -141,24 +155,42 @@ function selectCell(cell){
     }
     selectedCell = cell;
     cell.classList.add("active");
-    detectContainer(cell);
+    // detectRow(cell);
+    detectCellRowColumn(cell);
     
 }
 
 
-function detectContainer(cell){
+function detectCellRowColumn(cell){
+    var innerRow = cell.parentElement;
+    var container = innerRow.parentElement;
+    var outerRow = container.parentElement;
 
-    var container = cell.parentElement.parentElement;
+    var innerRowNumber = innerRow.attributes["name"].value;
+   
+    //Detect the container
     if(selectedContainer != null){
         selectedContainer.classList.remove("highlighted");
+        selectedContainer.classList.add("unfocused");
     }
 
     selectedContainer = container;
     container.classList.add("highlighted");
+    container.classList.remove("unfocused");
+
+    //Detect the rows
+   
+
 }
 
 
+function detectRow(cell){
 
-function checkTable (currentState ) {
+   
+    console.log(rowNumber)
+}
+
+//Check for a win scenario
+function checkTable (currentTable , completeTable) {
 
 }
