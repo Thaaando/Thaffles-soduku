@@ -2,7 +2,7 @@ var selectedCell;
 
 var numberBtn = document.getElementsByClassName("number-btn");
 var parentGrid = document.getElementById("parent-grid");
-
+var emptyCells = 0;
 var testPuzzle = [
     1,2,3,0,0,0,0,8,9,
     1,2,0,8,4,6,8,9,5,
@@ -40,6 +40,8 @@ function generateTable() {
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
                            
+                        }else {
+                            emptyCells++;
                         }
                         // parentGridHTML += cellNumber;
                         parentGridHTML +=  '</p></div>';
@@ -107,12 +109,29 @@ var cells =  document.querySelectorAll(".cell").forEach(cell => {
 })
 
 function setValue(number) {
+    var valueElement =  selectedCell.getElementsByClassName("input-text")[0]
     if(selectedCell != null){
-        selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
+        if(valueElement.innerHTML == ""){
+            selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
+
+        }else{
+            showMessage("Can't fill a pre-filled cell");
+        }
     }
 }
 
+function showMessage (message) {
+    var messageBar = document.getElementById("message-bar");
+    var messageText = messageBar.getElementsByClassName("message-text")[0];
+    messageText.innerHTML= message;
+    messageBar.style.display = "block";
 
+    //hide message after 2 secs
+    setTimeout(function () {
+        messageBar.style.display = "none" 
+    }
+    , 2000);
+}
 
 function selectCell(cell){
     if(selectedCell != null) {
@@ -122,4 +141,15 @@ function selectCell(cell){
     selectedCell = cell;
     cell.classList.add("active");
     
+}
+
+
+function detectCell(){
+
+}
+
+
+
+function checkTable (currentState ) {
+
 }
