@@ -55,15 +55,14 @@ function generateTable() {
                         parentGridHTML +=  '</p></div>';
                         cellNumber++;
                         currCol++;
+                    
                         if((currCol-1)%3==0){
                             currCol -= 3 ;
                         }
                     }
                     parentGridHTML += '</div>';
-                    currRow++;
-                    
+                    currRow++;                    
                     if((currRow-1)%3==0){
-                        
                         currRow -= 3;
                     }
                    
@@ -171,6 +170,8 @@ function selectCell(cell){
 function detectCellRowColumn(cell){
     var innerRow = cell.parentElement;
     var container = innerRow.parentElement;
+
+
    
    
     //Detect the container
@@ -181,17 +182,27 @@ function detectCellRowColumn(cell){
     selectedContainer = container;
     container.classList.add("highlighted");
 
-    //Detect the rows
-   
+    var rowNumber = "." + cell.classList[1];
+    var colNumber = "." + cell.classList[2];
+
+    document.querySelectorAll(".cell.highlighted").forEach((otherCell) =>{
+        otherCell.classList.remove("highlighted");
+    })
+    highlightCells(rowNumber);
+    highlightCells(colNumber);
+    
+
 
 }
 
-
-function detectRow(cell){
-
-   
-    console.log(rowNumber)
+function highlightCells(coordinate) {
+    document.querySelectorAll(coordinate).forEach((otherCell) =>{
+        otherCell.classList.add("highlighted");
+    });
 }
+
+
+
 
 //Check for a win scenario
 function checkTable (currentTable , completeTable) {
