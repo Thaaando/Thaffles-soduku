@@ -142,14 +142,19 @@ var cells =  document.querySelectorAll(".cell").forEach(cell => {
     })
 })
 
+
+function gameOver(){
+    showMessage("Made too many mistakes, Game Over ")
+
+}
 function setValue(number) {
 
     if(mistakes <3 ){
-        var valueElement =  selectedCell.getElementsByClassName("input-text")[0]
-        if(selectedCell != null){
-            if(valueElement.innerHTML == ""){
+       if(selectedCell != null){
+            var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
+            var isError = selectedCell.classList.contains("error");
+            if(valueElement.innerHTML == "" || isError){
                 selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
-                
                 selectedCell.attributes["name"].value = number;
             }else{
                 showMessage("Can't fill a pre-filled cell");
@@ -158,7 +163,7 @@ function setValue(number) {
         detectDuplicates();
         checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
     }else {
-        showMessage("Made too many mistakes")
+        gameOver();
     }
     
 }
@@ -243,10 +248,13 @@ function checkCell (index, currValue, cell) {
         cell.classList.add("error");
         mistakes++;
         if(mistakes > 3) {
-            showMessage("you have made more than 3 mistakes");
+            gameOver();
         }
 
-    }else if(c){}
+    }else{
+        cell.classList.remove("error");
+        cell.classList.add("modified");
+    }
 }
 
 
