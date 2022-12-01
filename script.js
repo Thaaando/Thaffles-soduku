@@ -28,21 +28,22 @@ function generateTable() {
 
     //used for cell navigation through numbering cells by row (r-1, r-2 .. )and colums (c-1, c-2, c-3) within the class list
     var currRow = 1;
-    var rowOffset = 0;
-    var currCol = 1;
+    var colOffset = 0;
         //Outer rows
         for(i = 0; i < 3; i++){
+            var currCol = 1;
+
             parentGridHTML += '<div class="row">';
             //Inner Containers
             for(j = 0; j < 3; j++){
-                parentGridHTML += '<div class="container unfocused">';
+                parentGridHTML += '<div class="container">';
                 //Inner Rows
                 for(k = 0; k < 3; k++){
                     var innerRowNumber = k +1;
                     parentGridHTML += '<div class="row"name = "' + innerRowNumber + '" ' + '>';
                     //Individual Cells
                     for(c = 0; c < 3; c++){                      
-                        parentGridHTML += '<div class="cell r-' + currRow + '" ' + '><p class="input-text">';
+                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol + '"><p class="input-text">';
                         var cellValue = testPuzzle[cellNumber];
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
@@ -53,6 +54,10 @@ function generateTable() {
                         // parentGridHTML += cellNumber;
                         parentGridHTML +=  '</p></div>';
                         cellNumber++;
+                        currCol++;
+                        if((currCol-1)%3==0){
+                            currCol -= 3 ;
+                        }
                     }
                     parentGridHTML += '</div>';
                     currRow++;
@@ -61,12 +66,14 @@ function generateTable() {
                         
                         currRow -= 3;
                     }
+                   
                 }
                 parentGridHTML += '</div>';
                 if(j == 2){
                     currRow += 3;
 
                 }
+                currCol += 3;
             }
 
             parentGridHTML += '</div>';
@@ -164,19 +171,15 @@ function selectCell(cell){
 function detectCellRowColumn(cell){
     var innerRow = cell.parentElement;
     var container = innerRow.parentElement;
-    var outerRow = container.parentElement;
-
-    var innerRowNumber = innerRow.attributes["name"].value;
+   
    
     //Detect the container
     if(selectedContainer != null){
         selectedContainer.classList.remove("highlighted");
-        selectedContainer.classList.add("unfocused");
     }
 
     selectedContainer = container;
     container.classList.add("highlighted");
-    container.classList.remove("unfocused");
 
     //Detect the rows
    
