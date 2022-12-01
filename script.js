@@ -4,18 +4,36 @@ var selectedContainer;
 var numberBtn = document.getElementsByClassName("number-btn");
 var parentGrid = document.getElementById("parent-grid");
 var emptyCells = 0;
-var testPuzzle = [
-    1,2,3,0,0,0,0,8,9,
-    1,2,0,8,4,6,8,9,5,
-    1,0,3,0,5,6,0,8,9,
-    1,2,3,0,5,6,7,0,9,
-    1,2,3,4,0,6,0,8,9,
-    1,2,0,4,5,0,7,8,9,
-    1,0,3,0,5,0,7,0,9,
-    1,2,3,4,0,6,7,0,9,
-    1,0,3,4,5,6,7,8,9
-]
 
+var mistakes = 0;
+
+
+
+//This is a dummy puzzle to test out functionality
+var testPuzzle = [ //the emptied out puzzle
+    1,5,0,2,7,4,0,0,6,
+    0,4,2,5,6,0,0,0,7,
+    0,0,6,0,1,0,4,0,2,
+    0,1,0,0,0,0,0,6,0,
+    0,0,0,0,5,0,4,0,3,
+    0,4,0,0,0,0,1,9,0,
+    0,2,0,9,8,5,0,4,0,
+    6,0,5,0,3,0,2,1,9,
+    9,0,0,0,6,0,8,3,0
+];
+
+var memo = [ //the completed puzzle
+    1,5,9,2,7,4,8,3,6,
+    3,4,2,5,6,8,1,9,7,
+    7,8,6,3,1,9,4,5,2,
+    7,1,8,4,9,3,5,6,2,
+    9,2,6,8,5,1,4,7,3,
+    5,4,3,6,2,7,1,9,8,
+    3,2,1,9,8,5,6,4,7,
+    6,8,5,7,3,4,2,1,9,
+    9,7,4,2,6,1,8,3,5
+]
+var currTable = testPuzzle;
 
 //Start up
 generateTable();
@@ -29,21 +47,23 @@ function generateTable() {
     //used for cell navigation through numbering cells by row (r-1, r-2 .. )and colums (c-1, c-2, c-3) within the class list
     var currRow = 1;
     var colOffset = 0;
+
+    var tableFactor = 3;
         //Outer rows
-        for(i = 0; i < 3; i++){
+        for(i = 0; i < tableFactor; i++){
             var currCol = 1;
 
             parentGridHTML += '<div class="row">';
             //Inner Containers
-            for(j = 0; j < 3; j++){
+            for(j = 0; j < tableFactor; j++){
                 parentGridHTML += '<div class="container">';
                 //Inner Rows
-                for(k = 0; k < 3; k++){
+                for(k = 0; k < tableFactor; k++){
                     var innerRowNumber = k +1;
                     parentGridHTML += '<div class="row"name = "' + innerRowNumber + '" ' + '>';
                     //Individual Cells
-                    for(c = 0; c < 3; c++){                      
-                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol + '"><p class="input-text">';
+                    for(c = 0; c < tableFactor; c++){                      
+                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol + '"><p class="input-text" id="' + cellNumber + '" >';
                         var cellValue = testPuzzle[cellNumber];
                         if(cellValue != 0){
                             parentGridHTML += cellValue;
@@ -56,23 +76,23 @@ function generateTable() {
                         cellNumber++;
                         currCol++;
                     
-                        if((currCol-1)%3==0){
-                            currCol -= 3 ;
+                        if((currCol-1)%tableFactor==0){
+                            currCol -= tableFactor ;
                         }
                     }
                     parentGridHTML += '</div>';
                     currRow++;                    
-                    if((currRow-1)%3==0){
-                        currRow -= 3;
+                    if((currRow-1)%tableFactor==0){
+                        currRow -= tableFactor;
                     }
                    
                 }
                 parentGridHTML += '</div>';
-                if(j == 2){
-                    currRow += 3;
+                if(j == tableFactor - 1){
+                    currRow += tableFactor;
 
                 }
-                currCol += 3;
+                currCol += tableFactor;
             }
 
             parentGridHTML += '</div>';
@@ -130,15 +150,22 @@ var cells =  document.querySelectorAll(".cell").forEach(cell => {
 })
 
 function setValue(number) {
-    var valueElement =  selectedCell.getElementsByClassName("input-text")[0]
-    if(selectedCell != null){
-        if(valueElement.innerHTML == ""){
-            selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
 
-        }else{
-            showMessage("Can't fill a pre-filled cell");
+    if(mistakes <3 ){
+        var valueElement =  selectedCell.getElementsByClassName("input-text")[0]
+        if(selectedCell != null){
+            if(valueElement.innerHTML == ""){
+                selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
+    
+            }else{
+                showMessage("Can't fill a pre-filled cell");
+            }
         }
+        checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
+    }else {
+        showMessage("Made too many mistakes")
     }
+    
 }
 
 function showMessage (message) {
@@ -161,18 +188,15 @@ function selectCell(cell){
     }
     selectedCell = cell;
     cell.classList.add("active");
-    // detectRow(cell);
-    detectCellRowColumn(cell);
     
+    detectCellRowColumn(cell);
+
 }
 
 
 function detectCellRowColumn(cell){
     var innerRow = cell.parentElement;
-    var container = innerRow.parentElement;
-
-
-   
+    var container = innerRow.parentElement; 
    
     //Detect the container
     if(selectedContainer != null){
@@ -182,6 +206,7 @@ function detectCellRowColumn(cell){
     selectedContainer = container;
     container.classList.add("highlighted");
 
+    //class names that hold row and column numbers
     var rowNumber = "." + cell.classList[1];
     var colNumber = "." + cell.classList[2];
 
@@ -201,7 +226,18 @@ function highlightCells(coordinate) {
     });
 }
 
+function checkCell (index, currValue, cell) {
 
+    if(memo[index] != currValue){
+
+        cell.classList.add("error");
+        mistakes++;
+        if(mistakes > 3) {
+            showMessage("you have made more than 3 mistakes");
+        }
+
+    }else if(c){}
+}
 
 
 //Check for a win scenario

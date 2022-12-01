@@ -21,6 +21,14 @@
 
 }
 
+.cell.error {
+    background-color: rgba(251, 0, 0, 0.1);
+}
+
+.cell.active.error{
+    background-color: rgba(251, 0, 0, 0.1);
+}
+
 
 
 .cell:hover{
@@ -49,7 +57,6 @@ input{
    background-color: transparent;
     text-align: center;
     color: white;
-    font-weight: bold;
 }
 input::selection{
     border: none;
@@ -57,7 +64,7 @@ input::selection{
 
 .input-text{
     color: white;
-    font-weight: bold;
+    font-size: 25px;
 }
 
 
