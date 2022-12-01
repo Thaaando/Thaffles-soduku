@@ -7,6 +7,8 @@ var emptyCells = 0;
 
 var mistakes = 0;
 
+var isGameOver = false;
+
 
 
 //This is a dummy puzzle to test out functionality
@@ -36,8 +38,20 @@ var memo = [ //the completed puzzle
 var currTable = testPuzzle;
 
 //Start up
-generateTable();
+startGame();
 
+function startGame(){
+    mistakes = 0;
+    isGameOver = false;
+    generateTable();
+    document.querySelectorAll(".cell").forEach(cell => {   
+        cell.addEventListener("click", event => 
+        {
+            selectCell(cell);      
+        })
+    });
+
+}
 function generateTable() {
 
 
@@ -135,20 +149,16 @@ document.addEventListener("keydown", event => {
 })
 
 
-var cells =  document.querySelectorAll(".cell").forEach(cell => {   
-    cell.addEventListener("click", event => 
-    {
-        selectCell(cell);      
-    })
-})
+
 
 
 function gameOver(){
-    showMessage("Made too many mistakes, Game Over ")
+    isGameOver = true;
+    showMessage(" Made 3 mistakes, Game Over :( ", false);
+    parentGrid.innerHTML = '  <div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
 
 }
 function setValue(number) {
-
     if(mistakes <3 ){
        if(selectedCell != null){
             var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
@@ -159,38 +169,42 @@ function setValue(number) {
             }else{
                 showMessage("Can't fill a pre-filled cell");
             }
+            detectDuplicates();
+            checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
         }
-        detectDuplicates();
-        checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
+        
     }else {
         gameOver();
     }
     
 }
 
-function showMessage (message) {
+function showMessage (message, close=true) {
     var messageBar = document.getElementById("message-bar");
     var messageText = messageBar.getElementsByClassName("message-text")[0];
     messageText.innerHTML= message;
     messageBar.style.display = "block";
-
+    if(close){
     //hide message after 2 secs
-    setTimeout(function () {
-        messageBar.style.display = "none" 
+        setTimeout(function () { messageBar.style.display = "none" }, 2000);
     }
-    , 2000);
+   
 }
 
 function selectCell(cell){
-    if(selectedCell != null) {
-        selectedCell.classList.remove("active");
-
-    }
-    selectedCell = cell;
-    cell.classList.add("active");
+    if(!isGameOver){
+        if(selectedCell != null) {
+            selectedCell.classList.remove("active");
     
-    detectCellRowColumn(cell);
-    detectDuplicates();
+        }
+        selectedCell = cell;
+        cell.classList.add("active");
+        
+        detectCellRowColumn(cell);
+        detectDuplicates();
+    }else {
+    }
+    
 
 }
 
@@ -247,7 +261,8 @@ function checkCell (index, currValue, cell) {
 
         cell.classList.add("error");
         mistakes++;
-        if(mistakes > 3) {
+        if(mistakes == 3) {
+
             gameOver();
         }
 
