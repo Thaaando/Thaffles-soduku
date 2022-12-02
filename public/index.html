@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <title>Thaffles</title>
 </head>
 <body>
@@ -107,8 +107,30 @@
 
     </div>
     
-    <script src="script.js" ></script>
-  
+    <script src="./script.js" ></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDkW0P5Hts53CC27irjZEGcHFHuFGR7PjU",
+          authDomain: "thaffles.firebaseapp.com",
+          projectId: "thaffles",
+          storageBucket: "thaffles.appspot.com",
+          messagingSenderId: "880179027855",
+          appId: "1:880179027855:web:f4cfbca936e9534d96f5fa",
+          measurementId: "G-KTZWCXT6Q8"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
 
 </body>
 </html>
