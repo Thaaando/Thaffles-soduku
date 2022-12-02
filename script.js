@@ -1,15 +1,17 @@
+
 var selectedCell;
 var selectedContainer;
 
-var numberBtn = document.getElementsByClassName("number-btn");
 var parentGrid = document.getElementById("parent-grid");
+var minTxt = document.getElementById("min-txt");
+var secTxt = document.getElementById("sec-txt");
+var messageBar = document.getElementById("message-bar");
+var messageText = messageBar.getElementsByClassName("message-text")[0];
+
 var emptyCells = 0;
-
 var mistakes = 0;
-
 var isGameOver = false;
-
-
+var timeInterval;
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -44,14 +46,44 @@ function startGame(){
     mistakes = 0;
     isGameOver = false;
     generateTable();
+    startTimer();
     document.querySelectorAll(".cell").forEach(cell => {   
         cell.addEventListener("click", event => 
         {
             selectCell(cell);      
         })
     });
+    
 
 }
+
+function startTimer() {
+    var seconds = 00;
+    var minutes = 00;
+    minTxt.innerHTML = "00";
+    secTxt.innerHTML = "00";
+    timeInterval = setInterval(function() {
+        
+        seconds++;
+        if(seconds < 10){
+            secTxt.innerHTML = "0" + seconds;
+        }else if(seconds  > 59){
+            seconds = 0;
+            minutes++;
+            secTxt.innerHTML = "00";
+            if(minutes < 10){
+                minTxt.innerHTML = "0" + minutes;
+            }
+        }else{
+            secTxt.innerHTML = seconds;
+
+        }
+        
+        
+
+    },1000);
+}
+
 function generateTable() {
 
 
@@ -114,7 +146,7 @@ function generateTable() {
 
 }
 
-
+//Listen for keyboard inputs
 document.addEventListener("keydown", event => {
     switch (event.key ) {
         case "9" :
@@ -154,10 +186,14 @@ document.addEventListener("keydown", event => {
 
 function gameOver(){
     isGameOver = true;
+    clearInterval(timeInterval);
+
     showMessage(" Made 3 mistakes, Game Over :( ", false);
     parentGrid.innerHTML = '  <div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
-
 }
+
+
+
 function setValue(number) {
     if(mistakes <3 ){
        if(selectedCell != null){
@@ -180,8 +216,7 @@ function setValue(number) {
 }
 
 function showMessage (message, close=true) {
-    var messageBar = document.getElementById("message-bar");
-    var messageText = messageBar.getElementsByClassName("message-text")[0];
+    
     messageText.innerHTML= message;
     messageBar.style.display = "block";
     if(close){
@@ -208,6 +243,7 @@ function selectCell(cell){
 
 }
 
+//Find all cell duplicates
 function detectDuplicates(){
     var valueElement =  selectedCell.attributes["name"].value;
     document.querySelectorAll(".cell.duplicate").forEach((duplicate) =>{
@@ -222,7 +258,7 @@ function detectDuplicates(){
     }
 }
 
-
+//find the row and column that a cell belongs to
 function detectCellRowColumn(cell){
     var innerRow = cell.parentElement;
     var container = innerRow.parentElement; 
@@ -244,17 +280,15 @@ function detectCellRowColumn(cell){
     })
     highlightCells(rowNumber);
     highlightCells(colNumber);
-    
-
-
 }
 
+//highlight the cell with the class name that is its coordinate
 function highlightCells(coordinate) {
     document.querySelectorAll(coordinate).forEach((otherCell) =>{
         otherCell.classList.add("highlighted");
     });
 }
-
+//check if the value entered is correct
 function checkCell (index, currValue, cell) {
 
     if(memo[index] != currValue){
@@ -271,12 +305,6 @@ function checkCell (index, currValue, cell) {
         cell.classList.add("modified");
     }
 }
-
-
-
-
-
-
 //Check for a win scenario
 function checkTable (currentTable , completeTable) {
 
