@@ -76,6 +76,8 @@ function startTimer() {
             secTxt.innerHTML = "00";
             if(minutes < 10){
                 minTxt.innerHTML = "0" + minutes;
+            }else{
+                minTxt.innerHTML = minutes;
             }
         }else{
             secTxt.innerHTML = seconds;
@@ -205,11 +207,12 @@ function setValue(number) {
             if(valueElement.innerHTML == "" || isError){
                 selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
                 selectedCell.attributes["name"].value = number;
+                detectDuplicates();
+                checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
             }else{
                 showMessage("Can't fill a pre-filled cell");
             }
-            detectDuplicates();
-            checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
+            
         }
         
     }else {
