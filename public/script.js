@@ -7,6 +7,7 @@ var minTxt = document.getElementById("min-txt");
 var secTxt = document.getElementById("sec-txt");
 var messageBar = document.getElementById("message-bar");
 var messageText = messageBar.getElementsByClassName("message-text")[0];
+var mistakesTxt = document.getElementById("mistake-txt");
 
 var emptyCells = 0;
 var mistakes = 0;
@@ -47,6 +48,8 @@ function startGame(){
     isGameOver = false;
     generateTable();
     startTimer();
+    messageBar.style.display = "none";
+    mistakesTxt.innerHTML = mistakes;
     document.querySelectorAll(".cell").forEach(cell => {   
         cell.addEventListener("click", event => 
         {
@@ -295,6 +298,7 @@ function checkCell (index, currValue, cell) {
 
         cell.classList.add("error");
         mistakes++;
+        mistakesTxt.innerHTML = mistakes;
         if(mistakes == 3) {
 
             gameOver();

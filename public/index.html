@@ -23,19 +23,25 @@
             </p>
         </div>
 
-        <div class="timing-bar" id="timing-bar">
-            <div class="row h-center">
-                <p class="minutes" id="min-txt"> 00 </p>
-                <p>:</p>
-                <p class="seconds" id="sec-txt">00</p>
+        <div class="info-bar h-center" id="info-bar">
+
+            <div class="row w-100" >
+                <div class="row timing">
+                    <p class="minutes" id="min-txt"> 00 </p>
+                    <p>:</p>
+                    <p class="seconds" id="sec-txt">00</p>
+                </div>
+               
+                <div class="mistakes ml-3">
+                    <p>Mistakes <span id="mistake-txt">0</span> /3</p>
+                </div>
             </div>
-           
         </div>
         <div class="parent-grid" id="parent-grid">
        
         </div>
 
-        <div class="container ">
+        <!-- <div class="container ">
             Testing Container
             <div class="row">
                 <div class="cell error" >
@@ -93,7 +99,7 @@
                 </div>   
         
             </div>
-        </div>
+        </div> -->
 
         <button class="number-btn" onclick="setValue(1)">1</button>
         <button class="number-btn" onclick="setValue(2)">2</button>

@@ -26,11 +26,20 @@
 
 }
 
-.timing-bar {
+.info-bar {
     color: white;
     font-size: 20px;
+    width: 372px;
 }
 
+.info-bar .row{
+    justify-content: space-between;
+}
+
+
+.w-100 {
+    width: 100% !important;
+}
 
 
 .cell.active {
