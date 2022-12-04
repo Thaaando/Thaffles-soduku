@@ -112,13 +112,17 @@ function generateTable() {
                     var innerRowNumber = k +1;
                     parentGridHTML += '<div class="row">';
                     //Individual Cells
-                    for(c = 0; c < tableFactor; c++){                      
-                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol +  '" name="' + testPuzzle[cellNumber] +'"><p class="input-text" id="' + cellNumber + '" >';
+                    for(c = 0; c < tableFactor; c++){
                         var cellValue = testPuzzle[cellNumber];
+                      
+                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol ;
+                        var name = '" name="' + testPuzzle[cellNumber] +'"><p class="input-text" id="' + cellNumber + '">';
                         if(cellValue != 0){
-                            parentGridHTML += cellValue;
+                            
+                            parentGridHTML += ' final' + name +   cellValue;
                            
                         }else {
+                            parentGridHTML +=  name;
                             emptyCells++;
                         }
                         // parentGridHTML += cellNumber;
@@ -197,7 +201,22 @@ function gameOver(){
     parentGrid.innerHTML = '  <div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
 }
 
+function selectCell(cell){
+    if(!isGameOver){
+        if(selectedCell != null) {
+            selectedCell.classList.remove("active");
+    
+        }
+        selectedCell = cell;
+        cell.classList.add("active");
+        
+        detectCellRowColumn(cell);
+        detectDuplicates();
+    }else {
+    }
+    
 
+}
 
 function setValue(number) {
     if(mistakes <3 ){
@@ -221,6 +240,19 @@ function setValue(number) {
     
 }
 
+
+
+function erase() {
+    if(selectedCell != null){
+        if(!selectedCell.classList.contains("final")){
+            selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
+            selectedCell.attributes["name"].value = "0";
+        }
+     
+
+    }
+}
+
 function showMessage (message, close=true) {
     
     messageText.innerHTML= message;
@@ -232,22 +264,7 @@ function showMessage (message, close=true) {
    
 }
 
-function selectCell(cell){
-    if(!isGameOver){
-        if(selectedCell != null) {
-            selectedCell.classList.remove("active");
-    
-        }
-        selectedCell = cell;
-        cell.classList.add("active");
-        
-        detectCellRowColumn(cell);
-        detectDuplicates();
-    }else {
-    }
-    
 
-}
 
 //Find all cell duplicates
 function detectDuplicates(){
