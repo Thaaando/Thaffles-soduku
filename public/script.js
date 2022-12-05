@@ -13,6 +13,7 @@ var emptyCells = 0;
 var mistakes = 0;
 var isGameOver = false;
 var timeInterval;
+var isNotes = false;
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -126,7 +127,11 @@ function generateTable() {
                             emptyCells++;
                         }
                         // parentGridHTML += cellNumber;
-                        parentGridHTML +=  '</p></div>';
+                        
+                        parentGridHTML +=  '</p>'
+                        parentGridHTML += '<div class="col w-100 h-100 note-layout"><div class="row w-100 h-30" ><p  class="note-text" name="1"></p><p class="note-text"  name="2"></p><p class="note-text"  name="3"></p></div><div class="row w-100 h-30"><p class="note-text"  name="4"></p><p class="note-text"  name="5"></p><p class="note-text"  name="6"></p></div><div class="row w-100  h-30"><p class="note-text"  name="7"></p><p class="note-text"  name="8"></p><p class="note-text"  name="9"></p></div></div>'
+                        
+                        parentGridHTML += ' </div>';
                         cellNumber++;
                         currCol++;
                     
@@ -229,16 +234,34 @@ function selectCell(cell){
 function setValue(number) {
     if(mistakes <3 ){
        if(selectedCell != null){
-            var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
-            var isError = selectedCell.classList.contains("error");
-            if(valueElement.innerHTML == "" || isError){
-                selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
-                selectedCell.attributes["name"].value = number;
-                detectDuplicates();
-                checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
-            }else{
-                showMessage("Can't fill a pre-filled cell");
+            if(isNotes){
+                selectedCell.getElementsByClassName("note-layout")[0].style.display = "block";
+                var noteTxt = selectedCell.getElementsByClassName("note-text")[number-1];
+                console.log(noteTxt.innerHTML);
+                if(noteTxt.innerHTML != ""){
+                    console.log("not empty")
+                    noteTxt.innerHTML = "";
+                }else{
+                    noteTxt.innerHTML = number;
+
+                }
+                console.log(noteTxt);
+            }else {
+                selectedCell.getElementsByClassName("note-layout")[0].style.display = "none";
+
+                var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
+                var isError = selectedCell.classList.contains("error");
+                if(valueElement.innerHTML == "" || isError){
+                    selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
+                    selectedCell.attributes["name"].value = number;
+                    detectDuplicates();
+                    checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
+                }else{
+                    showMessage("Can't fill a pre-filled cell");
+                }
             }
+
+            
             
         }
         
@@ -248,7 +271,10 @@ function setValue(number) {
     
 }
 
-
+function toggleNotes() {
+    isNotes = !isNotes;
+    console.log("Note Status :" + isNotes)
+}
 
 function erase() {
     if(selectedCell != null){
