@@ -184,8 +184,16 @@ document.addEventListener("keydown", event => {
             break;  
         case "1" :
             setValue(1);
-            break;  
-        
+            break;
+        case "0"  :
+            erase();
+            break;
+        case "Backspace" :
+            erase();
+            break;
+        case "delete":
+            erase();
+            break;
     }
 })
 
@@ -244,7 +252,8 @@ function setValue(number) {
 
 function erase() {
     if(selectedCell != null){
-        if(!selectedCell.classList.contains("final")){
+        if(selectedCell.classList.contains("error") ){
+            selectedCell.classList.remove("error");
             selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
             selectedCell.attributes["name"].value = "0";
         }
