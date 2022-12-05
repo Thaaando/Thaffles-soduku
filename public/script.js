@@ -16,7 +16,7 @@ var timeInterval;
 var isNotes = false;
 
 //This is a dummy puzzle to test out functionality
-var testPuzzle2 = [ //the emptied out puzzle
+var testPuzzle = [ //the emptied out puzzle
     1,5,0,2,7,4,0,0,6,
     0,4,2,5,6,0,0,0,7,
     0,0,6,0,1,0,4,0,2,
@@ -28,7 +28,7 @@ var testPuzzle2 = [ //the emptied out puzzle
     9,0,0,0,6,0,8,3,0
 ];
 
-var testPuzzle = [
+var testPuzzle2 = [
     1,5,9,2,7,4,8,3,6,
     3,4,2,5,6,8,1,9,7,
     7,8,6,3,1,9,4,5,2,
