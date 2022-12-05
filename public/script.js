@@ -256,6 +256,8 @@ function erase() {
             selectedCell.classList.remove("error");
             selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
             selectedCell.attributes["name"].value = "0";
+        }else{
+            showMessage("can't erase this cell");
         }
      
 
