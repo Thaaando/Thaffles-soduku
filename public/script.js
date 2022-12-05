@@ -16,7 +16,7 @@ var timeInterval;
 var isNotes = false;
 
 //This is a dummy puzzle to test out functionality
-var testPuzzle = [ //the emptied out puzzle
+var testPuzzle2 = [ //the emptied out puzzle
     1,5,0,2,7,4,0,0,6,
     0,4,2,5,6,0,0,0,7,
     0,0,6,0,1,0,4,0,2,
@@ -27,6 +27,18 @@ var testPuzzle = [ //the emptied out puzzle
     6,0,5,0,3,0,2,1,9,
     9,0,0,0,6,0,8,3,0
 ];
+
+var testPuzzle = [
+    1,5,9,2,7,4,8,3,6,
+    3,4,2,5,6,8,1,9,7,
+    7,8,6,3,1,9,4,5,2,
+    7,1,8,4,9,3,5,6,2,
+    9,2,6,8,5,1,4,7,3,
+    5,4,3,6,2,7,1,9,8,
+    3,2,1,9,8,5,6,4,7,
+    6,8,5,7,3,4,2,1,9,
+    9,7,4,2,6,1,8,3,0
+]
 
 var memo = [ //the completed puzzle
     1,5,9,2,7,4,8,3,6,
@@ -156,6 +168,7 @@ function generateTable() {
 
             parentGridHTML += '</div>';
         }
+        console.log(emptyCells)
         parentGrid.innerHTML = parentGridHTML;
 
 }
@@ -364,9 +377,24 @@ function checkCell (index, currValue, cell) {
     }else{
         cell.classList.remove("error");
         cell.classList.add("modified");
+        emptyCells--;
+        if(emptyCells == 0){
+            puzzleComplete();
+        }
     }
 }
 //Check for a win scenario
 function checkTable (currentTable , completeTable) {
 
+}
+
+function puzzleComplete() {
+
+    isGameOver = true;
+    clearInterval(timeInterval);
+
+    showMessage("Nice One! ", false);
+    parentGrid.innerHTML = '  <div class="game-over h-center">Go have a nice wank boyo!<button class="number-btn" onclick="startGame()">Retry</button></div>'
+
+    console.log("Puzzle Complete")
 }

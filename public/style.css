@@ -110,7 +110,7 @@
     margin: 0;
     font-size: 12px;
     padding: 0 0.2em;
-    color: #b6b6b6;
+    color: #e0e0e0;
     width: 33%;
 }
 
@@ -180,6 +180,12 @@ body{
     width: 372px;
     height: 372px;
     background-color: rgba(208, 255, 0, 0.162);
+    color: white;
+}
+.game-over.complete{
+    width: 372px;
+    height: 372px;
+    background-color: rgba(2, 255, 44, 0.162);
     color: white;
 }
 
