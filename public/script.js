@@ -3,6 +3,7 @@ var selectedCell;
 var selectedContainer;
 
 var parentGrid = document.getElementById("parent-grid");
+var pauseMenu = document.getElementById("pause-menu");
 var minTxt = document.getElementById("min-txt");
 var secTxt = document.getElementById("sec-txt");
 var messageBar = document.getElementById("message-bar");
@@ -14,6 +15,10 @@ var mistakes = 0;
 var isGameOver = false;
 var timeInterval;
 var isNotes = false;
+var isPaused = false;
+var seconds;
+var minutes;
+var currGridHTML;
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -59,7 +64,12 @@ startGame();
 function startGame(){
     mistakes = 0;
     isGameOver = false;
+    emptyCells = 0;
     generateTable();
+    seconds = 00;
+    minutes = 00;
+    minTxt.innerHTML = "00";
+    secTxt.innerHTML = "00";
     startTimer();
     messageBar.style.display = "none";
     mistakesTxt.innerHTML = mistakes;
@@ -74,10 +84,8 @@ function startGame(){
 }
 
 function startTimer() {
-    var seconds = 00;
-    var minutes = 00;
-    minTxt.innerHTML = "00";
-    secTxt.innerHTML = "00";
+   
+    
     timeInterval = setInterval(function() {
         
         seconds++;
@@ -227,6 +235,28 @@ function gameOver(){
     parentGrid.innerHTML = '  <div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
 }
 
+
+function togglePause() {
+    
+    isPaused = !isPaused;
+    if(isPaused){
+        console.log("Game Paused");
+        currGridHTML = parentGrid.innerHTML;
+        pauseMenu.style.display = "block";
+        parentGrid.style.display = "none";
+        // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
+        clearInterval(timeInterval);
+    }else{
+        console.log("Game resumed");
+        pauseMenu.style.display = "none";
+        parentGrid.style.display = "block";
+        // parentGrid.innerHTML = currGridHTML;
+        startTimer();
+    }
+}
+
+
+
 function selectCell(cell){
     if(!isGameOver){
         if(selectedCell != null) {
@@ -247,7 +277,7 @@ function selectCell(cell){
 function setValue(number) {
     if(mistakes <3 ){
        if(selectedCell != null){
-            if(isNotes){
+            if(isNotes){ //check if notes has been enabled
                 selectedCell.getElementsByClassName("note-layout")[0].style.display = "block";
                 var noteTxt = selectedCell.getElementsByClassName("note-text")[number-1];
                 console.log(noteTxt.innerHTML);
@@ -394,7 +424,7 @@ function puzzleComplete() {
     clearInterval(timeInterval);
 
     showMessage("Nice One! ", false);
-    parentGrid.innerHTML = '  <div class="game-over h-center">Go have a nice wank boyo!<button class="number-btn" onclick="startGame()">Retry</button></div>'
+    parentGrid.innerHTML = '  <div class="game-over complete h-center">Go have a nice wank boyo!<button class="number-btn" onclick="startGame()">Retry</button></div>'
 
     console.log("Puzzle Complete")
 }
