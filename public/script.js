@@ -399,10 +399,13 @@ function checkCell (index, currValue, cell) {
         cell.classList.add("error");
         mistakes++;
         mistakesTxt.innerHTML = mistakes;
+        showMessage("Made a mistake, only " + (3-mistakes)+ " lives remaining" );
+
         if(mistakes == 3) {
 
             gameOver();
         }
+
 
     }else{
         cell.classList.remove("error");
