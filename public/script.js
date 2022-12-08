@@ -10,6 +10,10 @@ var secTxt = document.getElementById("sec-txt");
 var messageBar = document.getElementById("message-bar");
 var messageText = messageBar.getElementsByClassName("message-text")[0];
 var mistakesTxt = document.getElementById("mistake-txt");
+var pauseBtn = document.querySelectorAll(".pause-btn");
+var erraseBtn = document.getElementById("erase-btn");
+var notesBtn = document.getElementById("notes-btn");
+var numberBtns = document.querySelectorAll(".number-btn");
 
 var emptyCells = 0;
 var mistakes = 0;
@@ -64,8 +68,11 @@ startGame();
 
 function startGame(){
     var random = randomIntFromInterval(0, 139);
+    console.log("Puzzle number : " + random);
     testPuzzle = puzzles[random][1];
     memo = puzzles[random][0];
+    console.log("Puzzle solution : " + memo);
+   
     mistakes = 0;
     isGameOver = false;
     emptyCells = 0;
@@ -77,6 +84,25 @@ function startGame(){
     startTimer();
     messageBar.style.display = "none";
     mistakesTxt.innerHTML = mistakes;
+    pauseBtn.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            togglePause();
+        });
+    })
+    
+    numberBtns.forEach((btn)=>{
+        btn.addEventListener("click", (event) => {
+            setValue(btn.innerHTML);
+        })
+    });
+
+    erraseBtn.addEventListener("click", ()=>{
+        erase();
+    });
+
+    notesBtn.addEventListener("click", ()=>{
+        toggleNotes();
+    })
     document.querySelectorAll(".cell").forEach(cell => {   
         cell.addEventListener("click", event => 
         {
@@ -240,8 +266,20 @@ function gameOver(){
     isGameOver = true;
     clearInterval(timeInterval);
     showMessage(" Made 3 mistakes, Game Over :( ", false);
-    parentGrid.innerHTML = '<div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
+    parentGrid.innerHTML = '<div class="game-over h-center restart-btn">Nice Try!<button id="restart-btn">Retry</button></div>';
+    listenToRestart();
 }
+
+function listenToRestart(){
+
+    document.querySelectorAll(".restart-btn").forEach((restartBtn)=>{
+        restartBtn.addEventListener("click", ()=>{
+            startGame();
+        });
+    });
+    
+}
+
 
 
 function togglePause() {
@@ -434,7 +472,9 @@ function puzzleComplete() {
     clearInterval(timeInterval);
 
     showMessage("Nice One! ", false);
-    parentGrid.innerHTML = '  <div class="game-over complete h-center">Go have a nice wank boyo!<button class="number-btn" onclick="startGame()">Retry</button></div>'
-
+    parentGrid.innerHTML = '  <div class="game-over complete h-center">Go have a nice wank boyo!<button class="restart-btn">Retry</button></div>'
+    listenToRestart();
     console.log("Puzzle Complete")
 }
+
+export default setValue();

@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="pause-menu h-center" id="pause-menu">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>
+        <div class="pause-menu h-center" id="pause-menu">Paused!<button class="pause-btn" >Resume</button></div>
         <div class="parent-grid" id="parent-grid">
        
         </div>
@@ -125,22 +125,22 @@
         
             </div>
         </div> -->
-        <button class="note-btn" onclick="togglePause()">Pause</button>
+        <button class="pause-btn"  id="pause-btn">Pause</button>
 
-        <button class="errase-btn" onclick="erase()">Erase</button>
-        <button class="note-btn" onclick="toggleNotes()">Notes</button>
+        <button class="errase-btn" id="erase-btn">Erase</button>
+        <button class="note-btn" id="notes-btn">Notes</button>
 
 
 
-        <button class="number-btn" onclick="setValue(1)">1</button>
-        <button class="number-btn" onclick="setValue(2)">2</button>
-        <button class="number-btn" onclick="setValue(3)">3</button>
-        <button class="number-btn" onclick="setValue(4)">4</button>
-        <button class="number-btn" onclick="setValue(5)">5</button>
-        <button class="number-btn" onclick="setValue(6)">6</button>
-        <button class="number-btn" onclick="setValue(7)">7</button>
-        <button class="number-btn" onclick="setValue(8)">8</button>
-        <button class="number-btn" onclick="setValue(9)">9</button>
+        <button class="number-btn"  tag="1">1</button>
+        <button class="number-btn"  tag=""2>2</button>
+        <button class="number-btn" >3</button>
+        <button class="number-btn" >4</button>
+        <button class="number-btn" >5</button>
+        <button class="number-btn" >6</button>
+        <button class="number-btn" >7</button>
+        <button class="number-btn" >8</button>
+        <button class="number-btn" >9</button>
 
     </div>
     
@@ -168,7 +168,7 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
       </script>
-      <script src="./easy-puzzles.js" type="modoule"></script>
+      <!-- <script src="./easy-puzzles.js" type="modoule"></script> -->
 
 </body>
 </html>
