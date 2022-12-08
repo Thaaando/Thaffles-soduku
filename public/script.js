@@ -1,3 +1,4 @@
+import  puzzles from './easy-puzzles.js';
 
 var selectedCell;
 var selectedContainer;
@@ -62,12 +63,15 @@ var currTable = testPuzzle;
 startGame();
 
 function startGame(){
+    var random = randomIntFromInterval(0, 139);
+    testPuzzle = puzzles[random][1];
+    memo = puzzles[random][0];
     mistakes = 0;
     isGameOver = false;
     emptyCells = 0;
     generateTable();
-    seconds = 00;
-    minutes = 00;
+    seconds = 0;
+    minutes = 0;
     minTxt.innerHTML = "00";
     secTxt.innerHTML = "00";
     startTimer();
@@ -81,6 +85,11 @@ function startGame(){
     });
     
 
+}
+
+
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function startTimer() {
@@ -121,19 +130,19 @@ function generateTable() {
 
     var tableFactor = 3;
         //Outer rows
-        for(i = 0; i < tableFactor; i++){
+        for( var i = 0; i < tableFactor; i++){
             var currCol = 1;
 
             parentGridHTML += '<div class="row">';
             //Inner Containers
-            for(j = 0; j < tableFactor; j++){
+            for(var j = 0; j < tableFactor; j++){
                 parentGridHTML += '<div class="container">';
                 //Inner Rows
-                for(k = 0; k < tableFactor; k++){
+                for(var k = 0; k < tableFactor; k++){
                     var innerRowNumber = k +1;
                     parentGridHTML += '<div class="row">';
                     //Individual Cells
-                    for(c = 0; c < tableFactor; c++){
+                    for(var c = 0; c < tableFactor; c++){
                         var cellValue = testPuzzle[cellNumber];
                       
                         parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol ;
@@ -230,9 +239,8 @@ document.addEventListener("keydown", event => {
 function gameOver(){
     isGameOver = true;
     clearInterval(timeInterval);
-
     showMessage(" Made 3 mistakes, Game Over :( ", false);
-    parentGrid.innerHTML = '  <div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
+    parentGrid.innerHTML = '<div class="game-over h-center">Nice Try!<button class="number-btn" onclick="startGame()">Retry</button></div>'
 }
 
 
@@ -241,7 +249,6 @@ function togglePause() {
     isPaused = !isPaused;
     if(isPaused){
         console.log("Game Paused");
-        currGridHTML = parentGrid.innerHTML;
         pauseMenu.style.display = "block";
         parentGrid.style.display = "none";
         // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
