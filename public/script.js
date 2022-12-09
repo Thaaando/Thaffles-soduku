@@ -91,7 +91,6 @@ function startGame(){
     difficultyTxt.innerHTML = difficulty;
 
     var random = randomIntFromInterval(0, 139);
-    var random = 3;
 
     console.log("Puzzle number : " + random);
 

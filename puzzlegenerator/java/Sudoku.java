@@ -173,17 +173,22 @@ public class Sudoku
 	// complete game
 	public void removeKDigits()
 	{
+
 		int count = K;
 		while (count != 0)
 		{
-			int cellId = randomGenerator(N*N)-1;
+			int cellId = randomGenerator(N*N) - 1 ;
 
-			// System.out.println(cellId);
+			// System.out.println("Cell id : " + ( cellId + 1));
 			// extract coordinates i and j
 			int i = (cellId/N);
+			// int i = (randomGenerator(9))  ;
+			// if(i == 9){
+			// 	i = 8;
+			// }
+			
 			int j = cellId%9;
-			if (j != 0)
-				j = j - 1;
+			
 
 			// System.out.println(i+" "+j);
 			if (mat[i][j] != 0)
@@ -235,7 +240,7 @@ public class Sudoku
 	{
 
         List<List<List<String>>> output = new ArrayList<>();
-		int N = 9, K = 63;
+		int N = 9, K = 55;
         for(int i =0 ; i < 140; i++){
             Sudoku sudoku = new Sudoku(N, K);
             
@@ -244,9 +249,9 @@ public class Sudoku
             output.add(sudoku.fillValues());
 
         }
-    //     Sudoku sudoku = new Sudoku(N, K);
-    //  sudoku.fillValues();
+        // Sudoku sudoku = new Sudoku(N, K);
+     	// sudoku.fillValues();
         System.out.println(output);
-	// 	sudoku.printSudoku();
+		// sudoku.printSudoku();
 	}
 }
