@@ -1,4 +1,6 @@
-import  puzzles from './easy-puzzles.js';
+import easyPuzzles from './easy-puzzles.js';
+import mediumPuzzles from './medium-puzzles.js';
+import hardPuzzles from './hard-puzzles.js';
 
 var selectedCell;
 var selectedContainer;
@@ -14,6 +16,10 @@ var pauseBtn = document.querySelectorAll(".pause-btn");
 var erraseBtn = document.getElementById("erase-btn");
 var notesBtn = document.getElementById("notes-btn");
 var numberBtns = document.querySelectorAll(".number-btn");
+var gameScreen = document.getElementById("game-screen");
+var dificultyBtns = document.querySelectorAll(".difficulty-btn");
+var homeMenu = document.getElementById("home-menu");
+var difficultyTxt = document.getElementById("difficulty-txt");
 
 var emptyCells = 0;
 var mistakes = 0;
@@ -24,6 +30,7 @@ var isPaused = false;
 var seconds;
 var minutes;
 var currGridHTML;
+var difficulty;
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -63,14 +70,47 @@ var memo = [ //the completed puzzle
 ]
 var currTable = testPuzzle;
 
+
+initApp();
+function initApp() {
+    dificultyBtns.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            difficulty = btn.innerHTML;
+            homeMenu.style.display = "none";
+            gameScreen.style.display = "block";
+            startGame();
+        });
+    });
+   
+}
+
 //Start up
-startGame();
+// startGame();
 
 function startGame(){
+    difficultyTxt.innerHTML = difficulty;
+
     var random = randomIntFromInterval(0, 139);
+    var random = 3;
+
     console.log("Puzzle number : " + random);
-    testPuzzle = puzzles[random][1];
-    memo = puzzles[random][0];
+
+    if(difficulty == "Easy") {
+        testPuzzle = easyPuzzles[random][1];
+        memo = easyPuzzles[random][0];   
+    }else if(difficulty == "Medium" ){
+        testPuzzle = mediumPuzzles[random][1];
+        memo = mediumPuzzles[random][0];
+    } else if(difficulty === "Hard"){
+        testPuzzle = hardPuzzles[random][1];
+        memo = hardPuzzles[random][0];
+    }
+    
+    else {
+        console.error("Difficulty Setting not found");
+        return;
+    }
+    
     console.log("Puzzle solution : " + memo);
    
     mistakes = 0;

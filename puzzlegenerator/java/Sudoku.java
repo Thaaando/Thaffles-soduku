@@ -234,19 +234,19 @@ public class Sudoku
 	public static void main(String[] args)
 	{
 
-        // List<List<List<String>>> output = new ArrayList<>();
-		int N = 9, K = 43;
-        // for(int i =0 ; i < 140; i++){
-        //     Sudoku sudoku = new Sudoku(N, K);
+        List<List<List<String>>> output = new ArrayList<>();
+		int N = 9, K = 63;
+        for(int i =0 ; i < 140; i++){
+            Sudoku sudoku = new Sudoku(N, K);
             
 
-        //     System.out.println("Created Puzzle : " + i);
-        //     System.out.println(sudoku.fillValues());
+            // System.out.println("Created Puzzle : " + i);
+            output.add(sudoku.fillValues());
 
-        // }
-        Sudoku sudoku = new Sudoku(N, K);
-        System.out.println(sudoku.fillValues());
-        
-		// sudoku.printSudoku();
+        }
+    //     Sudoku sudoku = new Sudoku(N, K);
+    //  sudoku.fillValues();
+        System.out.println(output);
+	// 	sudoku.printSudoku();
 	}
 }
