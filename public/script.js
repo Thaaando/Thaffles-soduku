@@ -22,7 +22,10 @@ var dificultyBtns = document.querySelectorAll(".difficulty-btn");
 var homeMenu = document.getElementById("home-menu");
 var difficultyTxt = document.getElementById("difficulty-txt");
 
-var emptyCells = 0;
+var currEmptyCells = 0;
+var emptyCells;
+
+
 var mistakes = 0;
 var isGameOver = false;
 var timeInterval;
@@ -88,6 +91,11 @@ function initApp() {
 
 //Start up
 // startGame();
+pauseBtn.forEach((btn)=>{
+    btn.addEventListener("click", ()=>{
+        togglePause();
+    });
+})
 
 function startGame(){
     difficultyTxt.innerHTML = difficulty;
@@ -116,22 +124,20 @@ function startGame(){
    
     mistakes = 0;
     isGameOver = false;
-    emptyCells = 0;
+    isPaused = false;   
+    currEmptyCells = 0;
     generateTable();
-    seconds = 50;
-    minutes = 58;
+    emptyCells = currEmptyCells;
+    seconds = 0;
+    minutes = 0;
     hours = 0;
     minTxt.innerHTML = "00";
-    secTxt.innerHTML = "50";
+    secTxt.innerHTML = "00";
     hourTxt.style.display = "none"
     startTimer();
     messageBar.style.display = "none";
     mistakesTxt.innerHTML = mistakes;
-    pauseBtn.forEach((btn)=>{
-        btn.addEventListener("click", ()=>{
-            togglePause();
-        });
-    })
+    
     
     numberBtns.forEach((btn)=>{
         btn.addEventListener("click", (event) => {
@@ -235,7 +241,7 @@ function generateTable() {
                            
                         }else {
                             parentGridHTML +=  name;
-                            emptyCells++;
+                            currEmptyCells++;
                         }
                         // parentGridHTML += cellNumber;
                         
@@ -267,7 +273,7 @@ function generateTable() {
 
             parentGridHTML += '</div>';
         }
-        console.log(emptyCells)
+        console.log(currEmptyCells)
         parentGrid.innerHTML = parentGridHTML;
 
 }
@@ -339,21 +345,22 @@ function listenToRestart(){
 
 
 function togglePause() {
-    
     isPaused = !isPaused;
-    if(isPaused){
-        console.log("Game Paused");
-        pauseMenu.style.display = "block";
-        parentGrid.style.display = "none";
-        // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
-        clearInterval(timeInterval);
-    }else{
-        console.log("Game resumed");
-        pauseMenu.style.display = "none";
-        parentGrid.style.display = "block";
-        // parentGrid.innerHTML = currGridHTML;
-        startTimer();
-    }
+    console.log(isPaused)
+
+    // if(isPaused){
+    //     console.log("Game Paused");
+    //     pauseMenu.style.display = "block";
+    //     parentGrid.style.display = "none";
+    //     // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
+    //     clearInterval(timeInterval);
+    // }else{
+    //     console.log("Game resumed");
+    //     pauseMenu.style.display = "none";
+    //     parentGrid.style.display = "block";
+    //     // parentGrid.innerHTML = currGridHTML;
+    //     startTimer();
+    // }
 }
 
 
@@ -511,8 +518,8 @@ function checkCell (index, currValue, cell) {
     }else{
         cell.classList.remove("error");
         cell.classList.add("modified");
-        emptyCells--;
-        if(emptyCells == 0){
+        currEmptyCells--;
+        if(currEmptyCells == 0){
             puzzleComplete();
         }
     }
