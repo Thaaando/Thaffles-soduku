@@ -9,6 +9,7 @@ var parentGrid = document.getElementById("parent-grid");
 var pauseMenu = document.getElementById("pause-menu");
 var minTxt = document.getElementById("min-txt");
 var secTxt = document.getElementById("sec-txt");
+var hourTxt = document.getElementById("hour-txt");
 var messageBar = document.getElementById("message-bar");
 var messageText = messageBar.getElementsByClassName("message-text")[0];
 var mistakesTxt = document.getElementById("mistake-txt");
@@ -29,6 +30,7 @@ var isNotes = false;
 var isPaused = false;
 var seconds;
 var minutes;
+var hours;
 var currGridHTML;
 var difficulty;
 
@@ -91,7 +93,7 @@ function startGame(){
     difficultyTxt.innerHTML = difficulty;
 
     var random = randomIntFromInterval(0, 139);
-
+    
     console.log("Puzzle number : " + random);
 
     if(difficulty == "Easy") {
@@ -116,10 +118,12 @@ function startGame(){
     isGameOver = false;
     emptyCells = 0;
     generateTable();
-    seconds = 0;
-    minutes = 0;
+    seconds = 50;
+    minutes = 58;
+    hours = 0;
     minTxt.innerHTML = "00";
-    secTxt.innerHTML = "00";
+    secTxt.innerHTML = "50";
+    hourTxt.style.display = "none"
     startTimer();
     messageBar.style.display = "none";
     mistakesTxt.innerHTML = mistakes;
@@ -171,7 +175,20 @@ function startTimer() {
             secTxt.innerHTML = "00";
             if(minutes < 10){
                 minTxt.innerHTML = "0" + minutes;
-            }else{
+            }else if (minutes > 59) {
+                hours++;
+                minutes = 0;
+                minTxt.innerHTML ="00"
+                hourTxt.style.display = "block";
+                if(hours < 10){
+                    hourTxt.innerHTML = "0" + hours + ":";
+                }else {
+                    hourTxt.innerHTML = hours + ":";
+                }
+                
+            }
+            
+            else{
                 minTxt.innerHTML = minutes;
             }
         }else{
