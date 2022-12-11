@@ -90,11 +90,24 @@ function initApp() {
 }
 
 //Start up
-// startGame();
 pauseBtn.forEach((btn)=>{
     btn.addEventListener("click", ()=>{
         togglePause();
     });
+})
+
+numberBtns.forEach((btn)=>{
+    btn.addEventListener("click", (event) => {
+        setValue(btn.innerHTML);
+    })
+});
+
+erraseBtn.addEventListener("click", ()=>{
+    erase();
+});
+
+notesBtn.addEventListener("click", ()=>{
+    toggleNotes();
 })
 
 function startGame(){
@@ -139,19 +152,7 @@ function startGame(){
     mistakesTxt.innerHTML = mistakes;
     
     
-    numberBtns.forEach((btn)=>{
-        btn.addEventListener("click", (event) => {
-            setValue(btn.innerHTML);
-        })
-    });
-
-    erraseBtn.addEventListener("click", ()=>{
-        erase();
-    });
-
-    notesBtn.addEventListener("click", ()=>{
-        toggleNotes();
-    })
+   
     document.querySelectorAll(".cell").forEach(cell => {   
         cell.addEventListener("click", event => 
         {
@@ -346,21 +347,20 @@ function listenToRestart(){
 
 function togglePause() {
     isPaused = !isPaused;
-    console.log(isPaused)
 
-    // if(isPaused){
-    //     console.log("Game Paused");
-    //     pauseMenu.style.display = "block";
-    //     parentGrid.style.display = "none";
-    //     // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
-    //     clearInterval(timeInterval);
-    // }else{
-    //     console.log("Game resumed");
-    //     pauseMenu.style.display = "none";
-    //     parentGrid.style.display = "block";
-    //     // parentGrid.innerHTML = currGridHTML;
-    //     startTimer();
-    // }
+    if(isPaused){
+        console.log("Game Paused");
+        pauseMenu.style.display = "block";
+        parentGrid.style.display = "none";
+        // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
+        clearInterval(timeInterval);
+    }else{
+        console.log("Game resumed");
+        pauseMenu.style.display = "none";
+        parentGrid.style.display = "block";
+        // parentGrid.innerHTML = currGridHTML;
+        startTimer();
+    }
 }
 
 
