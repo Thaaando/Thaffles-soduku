@@ -21,10 +21,11 @@ var gameScreen = document.getElementById("game-screen");
 var dificultyBtns = document.querySelectorAll(".difficulty-btn");
 var homeMenu = document.getElementById("home-menu");
 var difficultyTxt = document.getElementById("difficulty-txt");
+var completionPercentage = document.getElementById("completion-percentage");
 
 var currEmptyCells = 0;
 var emptyCells;
-
+var completedCells = 0;
 
 var mistakes = 0;
 var isGameOver = false;
@@ -144,6 +145,7 @@ function startGame(){
     seconds = 0;
     minutes = 0;
     hours = 0;
+    completedCells = 0;
     minTxt.innerHTML = "00";
     secTxt.innerHTML = "00";
     hourTxt.style.display = "none"
@@ -518,15 +520,21 @@ function checkCell (index, currValue, cell) {
     }else{
         cell.classList.remove("error");
         cell.classList.add("modified");
+        completedCells++;
         currEmptyCells--;
         if(currEmptyCells == 0){
             puzzleComplete();
         }
+        completionPercentage.innerHTML =  checkCompletion();
     }
 }
 //Check for a win scenario
 function checkTable (currentTable , completeTable) {
 
+}
+
+function checkCompletion() {
+    return Math.floor((completedCells/emptyCells) * 100);
 }
 
 function puzzleComplete() {
