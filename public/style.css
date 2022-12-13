@@ -226,5 +226,5 @@ body{
 #progress-status {
     height: 100%;
     width: 0%;
-    background-color: blue;
+    background-color: red;
 }
