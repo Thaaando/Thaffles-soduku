@@ -216,3 +216,15 @@ body{
 
 
 
+
+.progress-bar{
+    width: 372px;
+    height: 10px;
+    background-color: grey;
+}
+
+#progress-status {
+    height: 100%;
+    width: 0%;
+    background-color: blue;
+}

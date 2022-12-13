@@ -22,6 +22,7 @@ var dificultyBtns = document.querySelectorAll(".difficulty-btn");
 var homeMenu = document.getElementById("home-menu");
 var difficultyTxt = document.getElementById("difficulty-txt");
 var completionPercentage = document.getElementById("completion-percentage");
+var progressStatus = document.getElementById("progress-status");
 
 var currEmptyCells = 0;
 var emptyCells;
@@ -525,7 +526,9 @@ function checkCell (index, currValue, cell) {
         if(currEmptyCells == 0){
             puzzleComplete();
         }
-        completionPercentage.innerHTML =  checkCompletion();
+        var completionStatus = checkCompletion();
+        completionPercentage.innerHTML =  completionStatus;
+        progressStatus.style.width = completionStatus + "%";
     }
 }
 //Check for a win scenario
