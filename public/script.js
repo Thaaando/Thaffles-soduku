@@ -546,7 +546,7 @@ function puzzleComplete() {
     clearInterval(timeInterval);
 
     showMessage("Nice One! ", false);
-    parentGrid.innerHTML = '  <div class="game-over complete h-center">Go have a nice wank boyo!<button class="restart-btn">Retry</button></div>'
+    parentGrid.innerHTML = '  <div class="game-over complete h-center">You are smarter than you look!<button class="restart-btn">Retry</button></div>'
     listenToRestart();
     console.log("Puzzle Complete")
 }
