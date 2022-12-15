@@ -49,6 +49,17 @@
             </div>
         </div>
         <div class="pause-menu h-center" id="pause-menu">Paused!<button class="pause-btn" >Resume</button></div>
+        <div class="completion-status">
+            <p id="completion-text">
+                <span id="completion-percentage">0</span> 
+                
+                % Complete
+            </p>
+
+            <div class="progress-bar"><div id="progress-status">
+
+            </div></div>
+        </div>
         <div class="parent-grid" id="parent-grid">
        
         </div>
@@ -137,17 +148,7 @@
             </div>
         </div> -->
 
-        <div class="completion-status">
-            <p id="completion-text">
-                <span id="completion-percentage">0</span> 
-                
-                % Complete
-            </p>
-
-            <div class="progress-bar"><div id="progress-status">
-
-            </div></div>
-        </div>
+       
         <button class="pause-btn"  id="pause-btn">Pause</button>
 
         <button class="errase-btn" id="erase-btn">Erase</button>
@@ -156,7 +157,12 @@
             <span id="notes-status">Off</span>
         </button>
 
-        <button id="duplicate-btn">Toggle Duplicates </button>
+        <button id="duplicate-btn">Show Duplicates : 
+            <span id="duplicate-status">On</span> </button>
+        <button id="highlights-btn">Show Highlights :
+            <span id="highlights-status">On</span>
+            
+        </button>
 
         <button class="number-btn"  tag="1">1</button>
         <button class="number-btn"  tag=""2>2</button>

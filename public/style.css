@@ -214,7 +214,10 @@ body{
 }
 
 
-
+.completion-status {
+    margin : 0 auto;
+    width: fit-content;
+}
 
 
 .progress-bar{
@@ -226,5 +229,5 @@ body{
 #progress-status {
     height: 100%;
     width: 0%;
-    background-color: red;
+    background-color: green;
 }

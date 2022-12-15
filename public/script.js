@@ -1,7 +1,7 @@
 import easyPuzzles from './easy-puzzles.js';
 import mediumPuzzles from './medium-puzzles.js';
 import hardPuzzles from './hard-puzzles.js';
-import { getDuplicateSetting } from './settings.js';
+import { getDuplicateSetting, getHighlightSetting } from './settings.js';
 
 var selectedCell;
 var selectedContainer;
@@ -378,13 +378,9 @@ function selectCell(cell){
         }
         selectedCell = cell;
         cell.classList.add("active");
-        
         detectCellRowColumn(cell);
-        if(getDuplicateSetting()){
-            detectDuplicates();
-        }else{
-            console.log("Show duplicate setting is off")
-        }
+        detectDuplicates();
+        
     }else {
     }
     
@@ -467,44 +463,68 @@ function showMessage (message, close=true) {
 }
 
 
-
-//Find all cell duplicates
-function detectDuplicates(){
-    var valueElement =  selectedCell.attributes["name"].value;
+//remove the previously highlighted duplicates
+function clearDuplicates() {
     document.querySelectorAll(".cell.duplicate").forEach((duplicate) =>{
         duplicate.classList.remove("duplicate");
     });
-    if(valueElement != 0){
-        
-        var duplicates = document.getElementsByName(valueElement);
-        duplicates.forEach((duplicate)=>{
-            duplicate.classList.add("duplicate");
-        });
-    }
 }
 
-//find the row and column that a cell belongs to
-function detectCellRowColumn(cell){
-    var innerRow = cell.parentElement;
-    var container = innerRow.parentElement; 
-   
+function clearHighlights() {
     //Detect the container
     if(selectedContainer != null){
         selectedContainer.classList.remove("highlighted");
     }
 
-    selectedContainer = container;
-    container.classList.add("highlighted");
-
-    //class names that hold row and column numbers
-    var rowNumber = "." + cell.classList[1];
-    var colNumber = "." + cell.classList[2];
-
     document.querySelectorAll(".cell.highlighted").forEach((otherCell) =>{
         otherCell.classList.remove("highlighted");
     })
-    highlightCells(rowNumber);
-    highlightCells(colNumber);
+}
+
+
+
+//Find all cell duplicates
+function detectDuplicates(){
+    clearDuplicates();
+
+    if(getDuplicateSetting()){
+        var valueElement =  selectedCell.attributes["name"].value;
+        if(valueElement != 0){
+            
+            var duplicates = document.getElementsByName(valueElement);
+            duplicates.forEach((duplicate)=>{
+                duplicate.classList.add("duplicate");
+            });
+        }
+    }else {
+        console.log("Show duplicate setting is off");
+    }
+    
+}
+
+//find the row and column that a cell belongs to
+function detectCellRowColumn(cell){
+    clearHighlights();
+
+    if(getHighlightSetting()){
+        var innerRow = cell.parentElement;
+        var container = innerRow.parentElement; 
+       
+        
+    
+        selectedContainer = container;
+        container.classList.add("highlighted");
+    
+        //class names that hold row and column numbers
+        var rowNumber = "." + cell.classList[1];
+        var colNumber = "." + cell.classList[2];
+        
+        highlightCells(rowNumber);
+        highlightCells(colNumber);
+    }else {
+        console.log("Show highlight setting is off");
+    }
+    
 }
 
 //highlight the cell with the class name that is its coordinate
@@ -546,11 +566,13 @@ function checkCell (index, currValue, cell) {
 function checkTable (currentTable , completeTable) {
 
 }
-
+//Calculates the percentage completion of the puzzle
 function checkCompletion() {
     return Math.floor((completedCells/emptyCells) * 100);
 }
 
+
+//called when the puzzle has been completed
 function puzzleComplete() {
 
     isGameOver = true;
