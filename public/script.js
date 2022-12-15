@@ -1,6 +1,7 @@
 import easyPuzzles from './easy-puzzles.js';
 import mediumPuzzles from './medium-puzzles.js';
 import hardPuzzles from './hard-puzzles.js';
+import { getDuplicateSetting } from './settings.js';
 
 var selectedCell;
 var selectedContainer;
@@ -23,6 +24,7 @@ var homeMenu = document.getElementById("home-menu");
 var difficultyTxt = document.getElementById("difficulty-txt");
 var completionPercentage = document.getElementById("completion-percentage");
 var progressStatus = document.getElementById("progress-status");
+var noteStatus = document.getElementById("notes-status");
 
 var currEmptyCells = 0;
 var emptyCells;
@@ -378,7 +380,11 @@ function selectCell(cell){
         cell.classList.add("active");
         
         detectCellRowColumn(cell);
-        detectDuplicates();
+        if(getDuplicateSetting()){
+            detectDuplicates();
+        }else{
+            console.log("Show duplicate setting is off")
+        }
     }else {
     }
     
@@ -427,7 +433,12 @@ function setValue(number) {
 
 function toggleNotes() {
     isNotes = !isNotes;
-    console.log("Note Status :" + isNotes)
+    if(isNotes){
+        noteStatus.innerHTML = "On";
+
+    }else {
+        noteStatus.innerHTML = "Off"
+    }
 }
 
 function erase() {

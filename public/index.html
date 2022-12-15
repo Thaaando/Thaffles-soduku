@@ -151,9 +151,12 @@
         <button class="pause-btn"  id="pause-btn">Pause</button>
 
         <button class="errase-btn" id="erase-btn">Erase</button>
-        <button class="note-btn" id="notes-btn">Notes</button>
+        <button class="note-btn" id="notes-btn">Notes :
 
+            <span id="notes-status">Off</span>
+        </button>
 
+        <button id="duplicate-btn">Toggle Duplicates </button>
 
         <button class="number-btn"  tag="1">1</button>
         <button class="number-btn"  tag=""2>2</button>
@@ -168,6 +171,7 @@
     </div>
     
     <script src="./script.js" type="module" ></script>
+    <script src="./settings.js" type="module"></script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
