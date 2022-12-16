@@ -353,3 +353,15 @@ body{
   .site-color.active {
     border: 2px rgb(75, 255, 47) solid;
   }
+
+  .number-btn .number-value {
+    font-size: 23px;
+  }
+
+  .number-btn {
+    margin: 2px;
+  }
+
+  .function-btns{ 
+    margin: 10px 0;
+  }

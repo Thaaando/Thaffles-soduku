@@ -29,6 +29,18 @@ var noteStatus = document.getElementById("notes-status");
 var currEmptyCells = 0;
 var emptyCells;
 var completedCells = 0;
+var numbersLeft = {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+    4 : 0,
+    5 : 0,
+    6 : 0,
+    7 : 0,
+    8 : 0,
+    9 : 0
+    
+}
 
 var mistakes = 0;
 var isGameOver = false;
@@ -41,6 +53,7 @@ var minutes;
 var hours;
 var currGridHTML;
 var difficulty;
+
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -103,7 +116,7 @@ pauseBtn.forEach((btn)=>{
 
 numberBtns.forEach((btn)=>{
     btn.addEventListener("click", (event) => {
-        setValue(btn.innerHTML);
+        setValue(btn.attributes["name"].value);
     })
 });
 
@@ -146,6 +159,12 @@ function startGame(){
     isPaused = false;   
     currEmptyCells = 0;
     generateTable();
+    // find out the numbers left
+    for(var i = 1; i < 10; i++){
+        numbersLeft[i] = 9 - numbersLeft[i];
+        numberBtns[i-1].getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[i];
+    }
+
     emptyCells = currEmptyCells;
     seconds = 0;
     minutes = 0;
@@ -246,6 +265,7 @@ function generateTable() {
                         if(cellValue != 0){
                             
                             parentGridHTML += ' final' + name +   cellValue;
+                            numbersLeft[cellValue]++;
                            
                         }else {
                             parentGridHTML +=  name;
@@ -281,7 +301,7 @@ function generateTable() {
 
             parentGridHTML += '</div>';
         }
-        console.log(currEmptyCells)
+        console.log(currEmptyCells);
         parentGrid.innerHTML = parentGridHTML;
 
 }
@@ -392,7 +412,7 @@ function selectCell(cell){
 
 function setValue(number) {
     if(mistakes <3 ){
-       if(selectedCell != null){
+       if(selectedCell != null && !isPaused){
             if(isNotes){ //check if notes has been enabled
                 selectedCell.getElementsByClassName("note-layout")[0].style.display = "block";
                 var noteTxt = selectedCell.getElementsByClassName("note-text")[number-1];
@@ -405,7 +425,7 @@ function setValue(number) {
 
                 }
                 console.log(noteTxt);
-            }else {
+            }else { // set the value of the cell
                 selectedCell.getElementsByClassName("note-layout")[0].style.display = "none";
 
                 var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
@@ -413,6 +433,11 @@ function setValue(number) {
                 if(valueElement.innerHTML == "" || isError){
                     selectedCell.getElementsByClassName("input-text")[0].innerHTML = number;
                     selectedCell.attributes["name"].value = number;
+                    if(numbersLeft[number] > 0){
+                        numbersLeft[number]--;
+
+                    }
+                    numberBtns[number-1].getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[number];
                     detectDuplicates();
                     checkCell(valueElement.id,valueElement.innerHTML, selectedCell);
                 }else{
@@ -443,7 +468,10 @@ function toggleNotes() {
 function erase() {
     if(selectedCell != null){
         if(selectedCell.classList.contains("error") ){
+            var cellValue = selectedCell.attributes["name"].value;
             selectedCell.classList.remove("error");
+            numbersLeft[cellValue]++;
+            numberBtns[cellValue-1 ] .getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[cellValue];
             selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
             selectedCell.attributes["name"].value = "0";
         }else{
@@ -537,7 +565,7 @@ function highlightCells(coordinate) {
 //check if the value entered is correct
 function checkCell (index, currValue, cell) {
 
-    if(memo[index] != currValue){
+    if(memo[index] != currValue){ //if the current value doesnt match the memo
 
         cell.classList.add("error");
         mistakes++;
