@@ -35,6 +35,7 @@ var isGameOver = false;
 var timeInterval;
 var isNotes = false;
 var isPaused = false;
+var isPlaying = false;
 var seconds;
 var minutes;
 var hours;
@@ -115,6 +116,7 @@ notesBtn.addEventListener("click", ()=>{
 })
 
 function startGame(){
+    isPlaying = true;
     difficultyTxt.innerHTML = difficulty;
 
     var random = randomIntFromInterval(0, 139);
@@ -332,6 +334,7 @@ document.addEventListener("keydown", event => {
 
 function gameOver(){
     isGameOver = true;
+    isPlaying = false;
     clearInterval(timeInterval);
     showMessage(" Made 3 mistakes, Game Over :( ", false);
     parentGrid.innerHTML = '<div class="game-over h-center restart-btn">Nice Try!<button id="restart-btn">Retry</button></div>';
@@ -580,6 +583,10 @@ function puzzleComplete() {
     parentGrid.innerHTML = '  <div class="game-over complete h-center">You are smarter than you look!<button class="restart-btn">Retry</button></div>'
     listenToRestart();
     console.log("Puzzle Complete")
+}
+
+export function getGameStatus() {
+    return isPlaying;
 }
 
 export default setValue();

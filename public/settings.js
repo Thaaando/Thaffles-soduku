@@ -1,4 +1,4 @@
-import { togglePause } from "./script.js";
+import { togglePause, getGameStatus } from "./script.js";
 
 
 var closeBtn = document.getElementById("close-settings-btn");
@@ -27,12 +27,16 @@ function onInit () {
    
     openSettingsBtn.addEventListener("click", ()=>{
         openSettings();
-        togglePause();
+        if(getGameStatus()){
+            togglePause();
+        }
     });
 
     closeSettingsBtn.addEventListener("click", ()=>{
         settingsMenu.style.display = "none";
-        togglePause();
+        if(getGameStatus()){
+            togglePause();
+        }
 
     });
 
