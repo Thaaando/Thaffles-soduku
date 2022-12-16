@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +8,71 @@
     <link rel="stylesheet" href="./style.css">
     <title>Thaffles</title>
 </head>
+
 <body>
     <div class="toolbar">
-        <p class="title">Thaffles</p>
+        <div class="row">
+            <p class="title">Thaffles</p>
+
+            <button id="open-settings-btn">Settings</button>
+        </div>
+        
+    </div>
+
+    <div class="settings-menu" id="settings-menu">
+        <div class="main-body">
+            <div class="row w-100">
+                <h2 class="text-center"> Settings</h2>
+                <button id="close-settings-btn">Close</button>
+            </div>
+            <div class="row w-100">
+                <span> 
+                    Show number duplicates
+                </span>
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input type="checkbox" id="duplicate-switch" checked="true">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="row w-100">
+                <span> 
+                    Show highlighted cells
+                </span>
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input type="checkbox" id="highlights-switch" checked="true">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="row w-100">
+                <span> 
+                    Show Completion Status
+                </span>
+                <!-- Rounded switch -->
+                <label class="switch">
+                    <input type="checkbox" id="completion-switch" checked="true">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
     </div>
 
 
-   <div class="home-menu" id="home-menu">
+    <div class="home-menu" id="home-menu">
         <p>Please pick your prefered difficulty, we have 420 puzzles to play</p>
         <button class="difficulty-btn" id="easy-dif-btn">Easy</button>
         <button class="difficulty-btn" id="medium-dif-btn">Medium</button>
         <button class="difficulty-btn" id="hard-dif-btn">Hard</button>
 
-   </div>
-    
+    </div>
+
 
     <div class="main-content" id="game-screen">
+
+
+
         <div class="message-bar" id="message-bar">
             <p class="message-text" id="message-text">
                 Lorem Ipsum
@@ -31,37 +81,39 @@
 
         <div class="info-bar h-center" id="info-bar">
 
-            <div class="row w-100" >
+            <div class="row w-100">
 
                 <p id="difficulty-txt">Easy</p>
 
                 <div class="row timing">
 
-                    <p class="hours" id ="hour-txt">01: </p>
+                    <p class="hours" id="hour-txt">01: </p>
                     <p class="minutes" id="min-txt"> 00 </p>
                     <p>:</p>
                     <p class="seconds" id="sec-txt">00</p>
                 </div>
-               
+
                 <div class="mistakes ml-3">
                     <p>Mistakes <span id="mistake-txt">0</span> /3</p>
                 </div>
             </div>
         </div>
-        <div class="pause-menu h-center" id="pause-menu">Paused!<button class="pause-btn" >Resume</button></div>
-        <div class="completion-status">
+        <div class="pause-menu h-center" id="pause-menu">Paused!<button class="pause-btn">Resume</button></div>
+        <div class="completion-status" id="completion-status">
             <p id="completion-text">
-                <span id="completion-percentage">0</span> 
-                
+                <span id="completion-percentage">0</span>
+
                 % Complete
             </p>
 
-            <div class="progress-bar"><div id="progress-status">
+            <div class="progress-bar">
+                <div id="progress-status">
 
-            </div></div>
+                </div>
+            </div>
         </div>
         <div class="parent-grid" id="parent-grid">
-       
+
         </div>
 
 
@@ -148,8 +200,8 @@
             </div>
         </div> -->
 
-       
-        <button class="pause-btn"  id="pause-btn">Pause</button>
+
+        <button class="pause-btn" id="pause-btn">Pause</button>
 
         <button class="errase-btn" id="erase-btn">Erase</button>
         <button class="note-btn" id="notes-btn">Notes :
@@ -157,26 +209,21 @@
             <span id="notes-status">Off</span>
         </button>
 
-        <button id="duplicate-btn">Show Duplicates : 
-            <span id="duplicate-status">On</span> </button>
-        <button id="highlights-btn">Show Highlights :
-            <span id="highlights-status">On</span>
-            
-        </button>
+        
 
-        <button class="number-btn"  tag="1">1</button>
-        <button class="number-btn"  tag=""2>2</button>
-        <button class="number-btn" >3</button>
-        <button class="number-btn" >4</button>
-        <button class="number-btn" >5</button>
-        <button class="number-btn" >6</button>
-        <button class="number-btn" >7</button>
-        <button class="number-btn" >8</button>
-        <button class="number-btn" >9</button>
+        <button class="number-btn" tag="1">1</button>
+        <button class="number-btn" tag="" 2>2</button>
+        <button class="number-btn">3</button>
+        <button class="number-btn">4</button>
+        <button class="number-btn">5</button>
+        <button class="number-btn">6</button>
+        <button class="number-btn">7</button>
+        <button class="number-btn">8</button>
+        <button class="number-btn">9</button>
 
     </div>
-    
-    <script src="./script.js" type="module" ></script>
+
+    <script src="./script.js" type="module"></script>
     <script src="./settings.js" type="module"></script>
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -184,24 +231,25 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-analytics.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
-      
+
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-          apiKey: "AIzaSyDkW0P5Hts53CC27irjZEGcHFHuFGR7PjU",
-          authDomain: "thaffles.firebaseapp.com",
-          projectId: "thaffles",
-          storageBucket: "thaffles.appspot.com",
-          messagingSenderId: "880179027855",
-          appId: "1:880179027855:web:f4cfbca936e9534d96f5fa",
-          measurementId: "G-KTZWCXT6Q8"
+            apiKey: "AIzaSyDkW0P5Hts53CC27irjZEGcHFHuFGR7PjU",
+            authDomain: "thaffles.firebaseapp.com",
+            projectId: "thaffles",
+            storageBucket: "thaffles.appspot.com",
+            messagingSenderId: "880179027855",
+            appId: "1:880179027855:web:f4cfbca936e9534d96f5fa",
+            measurementId: "G-KTZWCXT6Q8"
         };
-      
+
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-      </script>
-      <!-- <script src="./easy-puzzles.js" type="modoule"></script> -->
+    </script>
+    <!-- <script src="./easy-puzzles.js" type="modoule"></script> -->
 
 </body>
+
 </html>
