@@ -6,6 +6,7 @@ var closeBtn = document.getElementById("close-settings-btn");
 var duplicateSwitch = document.getElementById("duplicate-switch");
 var highlightsSwitch = document.getElementById("highlights-switch");
 var completionSwitch = document.getElementById("completion-switch");
+var numbersLeftSwitch = document.getElementById("numbers-left-switch");
 
 
 var openSettingsBtn = document.getElementById("open-settings-btn");
@@ -19,6 +20,7 @@ var selectedTheme = document.getElementsByClassName("site-color active")[0];
 
 var showDuplicates = true;
 var showHighlights = true;
+var showNumbersLeft = true;
 
 
 onInit();
@@ -46,6 +48,22 @@ function onInit () {
 
     highlightsSwitch.addEventListener("change", () => {
         toggleHighlights();
+    });
+
+    numbersLeftSwitch.addEventListener("change", () => {
+        if(numbersLeftSwitch.checked){
+            document.querySelectorAll(".numbers-left").forEach((
+                numberLeft
+            ) => {
+                numberLeft.style.display = "block"
+            });
+        }else{
+            document.querySelectorAll(".numbers-left").forEach((
+                numberLeft
+            ) => {
+                numberLeft.style.display = "none"
+            });
+        }
     });
 
     completionSwitch.addEventListener("change", () => {
@@ -84,6 +102,10 @@ function toggleDuplicates() {
 function toggleHighlights() {
     showHighlights = !showHighlights;
     console.log("Show highlights : " + showHighlights);
+}
+
+function toggleNumbersLeft() {
+    document.getElementsByClassName()
 }
 
 function setTheme() {

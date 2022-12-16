@@ -471,7 +471,7 @@ function erase() {
             var cellValue = selectedCell.attributes["name"].value;
             selectedCell.classList.remove("error");
             numbersLeft[cellValue]++;
-            numberBtns[cellValue-1 ] .getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[cellValue];
+            numberBtns[cellValue-1].getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[cellValue];
             selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
             selectedCell.attributes["name"].value = "0";
         }else{
