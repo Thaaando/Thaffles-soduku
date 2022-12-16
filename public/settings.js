@@ -1,3 +1,5 @@
+import { togglePause } from "./script.js";
+
 
 var closeBtn = document.getElementById("close-settings-btn");
 
@@ -25,10 +27,13 @@ function onInit () {
    
     openSettingsBtn.addEventListener("click", ()=>{
         openSettings();
+        togglePause();
     });
 
     closeSettingsBtn.addEventListener("click", ()=>{
         settingsMenu.style.display = "none";
+        togglePause();
+
     });
 
     duplicateSwitch.addEventListener("change", () =>{

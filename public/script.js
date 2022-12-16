@@ -350,7 +350,7 @@ function listenToRestart(){
 
 
 
-function togglePause() {
+export function togglePause() {
     isPaused = !isPaused;
 
     if(isPaused){
@@ -497,8 +497,7 @@ function detectDuplicates(){
             });
         }
     }else {
-        console.log("Show duplicate setting is off");
-    }
+  }
     
 }
 
@@ -522,7 +521,6 @@ function detectCellRowColumn(cell){
         highlightCells(rowNumber);
         highlightCells(colNumber);
     }else {
-        console.log("Show highlight setting is off");
     }
     
 }
