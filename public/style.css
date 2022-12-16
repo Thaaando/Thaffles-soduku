@@ -162,7 +162,7 @@ input::selection{
 }
 
 body{
-    background-color: #6E7C94;
+    background-color: #367eb8;
 }
 
 .message-bar{
@@ -311,8 +311,8 @@ body{
   }
 
   .settings-menu .main-body {
-    height: 50%;
-    width: 50%;
+    height: 500px;
+    width: 350px;
     margin: 0 auto;
 
   background-color: white;
@@ -323,4 +323,33 @@ body{
   .settings-menu .main-body .row{
     justify-content: space-between;
     margin : 10px 0;
+  }
+
+  /* Site Colors and Themes */
+
+  .site-colors {
+    justify-content: start !important;
+  }
+
+  .site-color {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 5px 0 0;
+  }
+
+  .site-color.dark{
+    background-color: rgb(30, 30, 30);
+  }
+
+  .site-color.baby-blue{
+    background-color: #367eb8;
+  }
+
+  .site-color.baige{
+    background-color: rgb(255, 222, 203);
+  }
+
+  .site-color.active {
+    border: 2px rgb(75, 255, 47) solid;
   }
