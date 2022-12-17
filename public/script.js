@@ -414,18 +414,17 @@ function setValue(number) {
     if(mistakes <3 ){
        if(selectedCell != null && !isPaused){
             if(isNotes){ //check if notes has been enabled
-                selectedCell.getElementsByClassName("note-layout")[0].style.display = "block";
+                selectedCell.classList.add("noted-cell");
+                selectedCell.getElementsByClassName("note-layout")[0].style.display = "block"; 
                 var noteTxt = selectedCell.getElementsByClassName("note-text")[number-1];
-                console.log(noteTxt.innerHTML);
                 if(noteTxt.innerHTML != ""){
-                    console.log("not empty")
                     noteTxt.innerHTML = "";
                 }else{
                     noteTxt.innerHTML = number;
 
                 }
-                console.log(noteTxt);
             }else { // set the value of the cell
+                selectedCell.classList.remove("noted-cell");
                 selectedCell.getElementsByClassName("note-layout")[0].style.display = "none";
 
                 var valueElement =  selectedCell.getElementsByClassName("input-text")[0];
@@ -474,7 +473,11 @@ function erase() {
             numberBtns[cellValue-1].getElementsByClassName("numbers-left")[0].innerHTML = numbersLeft[cellValue];
             selectedCell.getElementsByClassName("input-text")[0].innerHTML = "";
             selectedCell.attributes["name"].value = "0";
-        }else{
+        }else if(selectedCell.classList.contains("noted-cell")){
+            selectedCell.getElementsByClassName("note-layout")[0].style.display = "none";
+
+        } 
+        else{
             showMessage("can't erase this cell");
         }
      
