@@ -7,7 +7,7 @@ var duplicateSwitch = document.getElementById("duplicate-switch");
 var highlightsSwitch = document.getElementById("highlights-switch");
 var completionSwitch = document.getElementById("completion-switch");
 var numbersLeftSwitch = document.getElementById("numbers-left-switch");
-
+var mistakeSwitch = document.getElementById("mistake-switch");
 
 var openSettingsBtn = document.getElementById("open-settings-btn");
 var closeSettingsBtn = document.getElementById("close-settings-btn");
@@ -18,6 +18,7 @@ var completionStatus = document.getElementById("completion-status");
 var siteColors = document.querySelectorAll(".site-color");
 var selectedTheme = document.getElementsByClassName("site-color active")[0];
 
+var mistakeLimitTxt = document.getElementById("mistake-limit-txt");
 var showDuplicates = true;
 var showHighlights = true;
 var showNumbersLeft = true;
@@ -50,6 +51,10 @@ function onInit () {
     highlightsSwitch.addEventListener("change", () => {
         toggleHighlights();
     });
+
+    mistakeSwitch.addEventListener("change", () =>{
+        toggleMistakesLimit();
+    })
 
     numbersLeftSwitch.addEventListener("change", () => {
         if(numbersLeftSwitch.checked){
@@ -106,7 +111,14 @@ function toggleHighlights() {
 }
 
 function toggleMistakesLimit() {
-    document.getElementsByClassName()
+    mistakeLimit = !mistakeLimit;
+    if(mistakeLimit){
+        mistakeLimitTxt.style.display = "block";
+    }else {
+        mistakeLimitTxt.style.display = "none";
+
+    }
+    console.log("Mistake Limit : " + mistakeLimit );
 }
 
 function setTheme() {
@@ -141,6 +153,10 @@ export function getDuplicateSetting() {
 
 export function getHighlightSetting() {
     return showHighlights;
+}
+
+export function getMistakesLimit() {
+    return mistakeLimit;
 }
 
 

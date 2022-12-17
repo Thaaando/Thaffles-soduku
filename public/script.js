@@ -1,7 +1,11 @@
 import easyPuzzles from './easy-puzzles.js';
 import mediumPuzzles from './medium-puzzles.js';
 import hardPuzzles from './hard-puzzles.js';
-import { getDuplicateSetting, getHighlightSetting } from './settings.js';
+import { 
+    getDuplicateSetting, 
+    getHighlightSetting,
+    getMistakesLimit
+} from './settings.js';
 
 var selectedCell;
 var selectedContainer;
@@ -423,7 +427,6 @@ function selectCell(cell){
 }
 
 function setValue(number) {
-    if(mistakes <3 ){
        if(selectedCell != null && !isPaused){
             if(isNotes){ //check if notes has been enabled
                 selectedCell.classList.add("noted-cell");
@@ -460,9 +463,7 @@ function setValue(number) {
             
         }
         
-    }else {
-        gameOver();
-    }
+    
     
 }
 
@@ -585,12 +586,15 @@ function checkCell (index, currValue, cell) {
         cell.classList.add("error");
         mistakes++;
         mistakesTxt.innerHTML = mistakes;
-        showMessage("Made a mistake, only " + (3-mistakes)+ " lives remaining" );
+        if(getMistakesLimit()){ //check if the mistake limit is on
+            showMessage("Made a mistake, only " + (3-mistakes)+ " lives remaining" );
+            if(mistakes == 3) {
 
-        if(mistakes == 3) {
-
-            gameOver();
+                gameOver();
+            }
         }
+
+        
 
 
     }else{
@@ -620,6 +624,7 @@ function checkCompletion() {
 function puzzleComplete() {
 
     isGameOver = true;
+    isPlaying = false;
     clearInterval(timeInterval);
 
     showMessage("Nice One! ", false);
