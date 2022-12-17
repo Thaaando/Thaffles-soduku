@@ -21,6 +21,7 @@ var selectedTheme = document.getElementsByClassName("site-color active")[0];
 var showDuplicates = true;
 var showHighlights = true;
 var showNumbersLeft = true;
+var mistakeLimit = true;
 
 
 onInit();
@@ -104,7 +105,7 @@ function toggleHighlights() {
     console.log("Show highlights : " + showHighlights);
 }
 
-function toggleNumbersLeft() {
+function toggleMistakesLimit() {
     document.getElementsByClassName()
 }
 

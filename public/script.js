@@ -17,6 +17,7 @@ var mistakesTxt = document.getElementById("mistake-txt");
 var pauseBtn = document.querySelectorAll(".pause-btn");
 var erraseBtn = document.getElementById("erase-btn");
 var notesBtn = document.getElementById("notes-btn");
+var quitBtn = document.getElementById("quit-btn");
 var numberBtns = document.querySelectorAll(".number-btn");
 var gameScreen = document.getElementById("game-screen");
 var dificultyBtns = document.querySelectorAll(".difficulty-btn");
@@ -187,6 +188,10 @@ function startGame(){
     });
     
 
+    quitBtn.addEventListener("click", () =>{
+        quitGame();
+    });
+
 }
 
 
@@ -346,12 +351,7 @@ document.addEventListener("keydown", event => {
             erase();
             break;
     }
-})
-
-
-
-
-
+});
 function gameOver(){
     isGameOver = true;
     isPlaying = false;
@@ -359,6 +359,18 @@ function gameOver(){
     showMessage(" Made 3 mistakes, Game Over :( ", false);
     parentGrid.innerHTML = '<div class="game-over h-center restart-btn">Nice Try!<button id="restart-btn">Retry</button></div>';
     listenToRestart();
+}
+
+function quitGame() {
+    if(confirm("Are sure you want to quit?")){
+        isGameOver = true;
+        isPlaying = false;
+        clearInterval(timeInterval);
+        homeMenu.style.display = "block";
+        gameScreen.style.display = "none";
+    }
+    
+   
 }
 
 function listenToRestart(){
