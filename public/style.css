@@ -219,6 +219,10 @@ body{
     width: fit-content;
 }
 
+#completion-text {
+  margin: 2px 0;
+}
+
 
 .progress-bar{
     width: 372px;
@@ -230,6 +234,8 @@ body{
     height: 100%;
     width: 0%;
     background-color: green;
+    transition: 1s;
+    -webkit-transition : 1s;
 }
 
 /* Switch styling */
