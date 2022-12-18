@@ -181,6 +181,22 @@ body{
     display: none;
 }
 
+
+.confirmation-bar {
+  background-color: white;
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+  padding:  0 7px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0%;
+  margin-left:auto;
+  margin-right:auto;
+  display: none;
+}
+
 .game-over{
     width: 372px;
     height: 372px;

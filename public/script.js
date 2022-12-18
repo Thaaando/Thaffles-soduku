@@ -30,6 +30,7 @@ var difficultyTxt = document.getElementById("difficulty-txt");
 var completionPercentage = document.getElementById("completion-percentage");
 var progressStatus = document.getElementById("progress-status");
 var noteStatus = document.getElementById("notes-status");
+var confirmationBar = document.getElementById("confirmation-bar");
 
 var currEmptyCells = 0;
 var emptyCells;
@@ -195,10 +196,12 @@ function startGame(){
     startTimer();
     messageBar.style.display = "none";
     mistakesTxt.innerHTML = mistakes;
-    
-    
+    selectedCell = null;
+
    
-    document.querySelectorAll(".cell").forEach(cell => {   
+    var cells = document.querySelectorAll(".cell");
+
+    cells.forEach(cell => {   
         cell.addEventListener("click", event => 
         {
             selectCell(cell);      
@@ -283,7 +286,7 @@ function generateTable() {
                     for(var c = 0; c < tableFactor; c++){
                         var cellValue = testPuzzle[cellNumber];
                       
-                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol ;
+                        parentGridHTML += '<div class="cell r-' + currRow + ' c-' + currCol  + ' ' + cellNumber;
                         var name = '" name="' + testPuzzle[cellNumber] +'"><p class="input-text" id="' + cellNumber + '">';
                         if(cellValue != 0){
                             
@@ -362,14 +365,70 @@ document.addEventListener("keydown", event => {
         case "0"  :
             erase();
             break;
+        case "ArrowUp":   
+            navigateToCell("up");
+            break;
+        case "ArrowDown":
+            navigateToCell("down");
+            break;
+        case "ArrowRight":
+            navigateToCell("right");
+            break;
+        case "ArrowLeft":
+            navigateToCell("left");
+            break;
         case "Backspace" :
             erase();
             break;
+
+
         case "delete":
             erase();
             break;
     }
 });
+
+function navigateToCell(direction) {
+    if(selectedCell != null){
+        var row =  selectedCell.classList[1];
+    var col = selectedCell.classList[2];
+    var targetRow = row;
+    var targetCol = col;
+    var rowVal = parseInt(row[2]);
+    var colVal = parseInt(col[2]);
+            
+    switch(direction) {
+        case "up":
+            if(rowVal > 1){
+                targetRow = "r-" + (rowVal - 1);
+            }
+            break;
+        case "down":
+            if(rowVal < 9){
+                targetRow = "r-" + (rowVal + 1);
+            }
+            break;
+        case "right":
+            if(colVal < 9) {
+                targetCol = "c-" + (colVal + 1);
+            }
+            break;
+        case "left":
+            if(colVal > 1) {
+                targetCol = "c-" + (colVal - 1);
+            }
+            break;
+    }
+    var target = "." + targetRow + "." + targetCol;
+    var targetCell = document.querySelectorAll(target)[0];
+    selectCell(targetCell); 
+    }else {
+        var target = ".r-1.c-1";
+        var targetCell = document.querySelectorAll(target)[0];
+        selectCell(targetCell); 
+    }
+
+}
 function gameOver(){
     isGameOver = true;
     isPlaying = false;
@@ -380,13 +439,23 @@ function gameOver(){
 }
 
 function quitGame() {
-    if(confirm("Are sure you want to quit?")){
+    confirmationBar.style.display = "block";
+    console.log(confirmationBar.getElementsByClassName("confirm-btn"))
+    confirmationBar.getElementsByClassName("confirm-btn")[0].addEventListener("click", 
+    ()=> {
+        
+        confirmationBar.style.display = "none"
         isGameOver = true;
         isPlaying = false;
         clearInterval(timeInterval);
         homeMenu.style.display = "block";
-        gameScreen.style.display = "none";
-    }
+        gameScreen.style.display = "none";  
+    });
+    confirmationBar.getElementsByClassName("cancel-btn")[0].addEventListener("click", 
+    ()=> {
+        confirmationBar.style.display = "none"
+     });
+   
     
    
 }
@@ -400,6 +469,8 @@ function listenToRestart(){
     });
     
 }
+
+
 
 
 
@@ -521,6 +592,10 @@ function showMessage (message, close=true) {
         setTimeout(function () { messageBar.style.display = "none" }, 2000);
     }
    
+}
+
+function confirmDialog() {
+
 }
 
 
