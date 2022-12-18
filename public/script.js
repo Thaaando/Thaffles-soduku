@@ -163,6 +163,18 @@ function startGame(){
     isGameOver = false;
     isPaused = false;   
     currEmptyCells = 0;
+    numbersLeft = {
+        1 : 0,
+        2 : 0,
+        3 : 0,
+        4 : 0,
+        5 : 0,
+        6 : 0,
+        7 : 0,
+        8 : 0,
+        9 : 0
+        
+    }
     generateTable();
     // find out the numbers left
     for(var i = 1; i < 10; i++){
@@ -175,6 +187,8 @@ function startGame(){
     minutes = 0;
     hours = 0;
     completedCells = 0;
+    completionPercentage.innerHTML = 0;
+    progressStatus.style.width = "0%";
     minTxt.innerHTML = "00";
     secTxt.innerHTML = "00";
     hourTxt.style.display = "none"
