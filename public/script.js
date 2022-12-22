@@ -143,24 +143,23 @@ function startGame(){
     
     console.log("Puzzle number : " + random);
 
-    if(difficulty == "Easy") {
-        testPuzzle = easyPuzzles[random][1];
-        memo = easyPuzzles[random][0];   
-    }else if(difficulty == "Medium" ){
-        testPuzzle = mediumPuzzles[random][1];
-        memo = mediumPuzzles[random][0];
-    } else if(difficulty === "Hard"){
-        testPuzzle = hardPuzzles[random][1];
-        memo = hardPuzzles[random][0];
-    }
+    // if(difficulty == "Easy") {
+    //     testPuzzle = easyPuzzles[random][1];
+    //     memo = easyPuzzles[random][0];   
+    // }else if(difficulty == "Medium" ){
+    //     testPuzzle = mediumPuzzles[random][1];
+    //     memo = mediumPuzzles[random][0];
+    // } else if(difficulty === "Hard"){
+    //     testPuzzle = hardPuzzles[random][1];
+    //     memo = hardPuzzles[random][0];
+    // }
     
-    else {
-        console.error("Difficulty Setting not found");
-        return;
-    }
+    // else {
+    //     console.error("Difficulty Setting not found");
+    //     return;
+    // }
 
-    
-    
+    testPuzzle = testPuzzle2;
     console.log("Puzzle solution : " + memo);
    
     mistakes = 0;
@@ -729,13 +728,26 @@ function puzzleComplete() {
 
     switch(mistakes) {
         case 0:
-            gameOverHtml += '<div>3 Stars </div>';
+            gameOverHtml += '<div>'
+            + '&starf;' 
+            + '&starf;' 
+            + '&starf;' 
+             + ' </div>';
             break;
         case 1:
-            gameOverHtml += '<div>2 Stars </div>';
+            gameOverHtml += '<div>'
+            + '&starf;' 
+            + '&starf;' 
+            + '&star;' 
+             + ' </div>';
             break;
         case 2:
             gameOverHtml += '<div>1 Star </div>';
+            gameOverHtml += '<div>'
+            + '&starf;' 
+            + '&star;' 
+            + '&star;' 
+             + ' </div>';
             break;
     }
     
