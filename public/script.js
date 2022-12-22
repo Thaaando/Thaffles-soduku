@@ -6,6 +6,7 @@ import {
     getHighlightSetting,
     getMistakesLimit
 } from './settings.js';
+import { saveScore } from './highscore.js';
 
 var selectedCell;
 var selectedContainer;
@@ -59,7 +60,7 @@ var minutes;
 var hours;
 var currGridHTML;
 var difficulty;
-
+var completionTime;
 
 //This is a dummy puzzle to test out functionality
 var testPuzzle = [ //the emptied out puzzle
@@ -142,21 +143,24 @@ function startGame(){
     
     console.log("Puzzle number : " + random);
 
-    if(difficulty == "Easy") {
-        testPuzzle = easyPuzzles[random][1];
-        memo = easyPuzzles[random][0];   
-    }else if(difficulty == "Medium" ){
-        testPuzzle = mediumPuzzles[random][1];
-        memo = mediumPuzzles[random][0];
-    } else if(difficulty === "Hard"){
-        testPuzzle = hardPuzzles[random][1];
-        memo = hardPuzzles[random][0];
-    }
+    // if(difficulty == "Easy") {
+    //     testPuzzle = easyPuzzles[random][1];
+    //     memo = easyPuzzles[random][0];   
+    // }else if(difficulty == "Medium" ){
+    //     testPuzzle = mediumPuzzles[random][1];
+    //     memo = mediumPuzzles[random][0];
+    // } else if(difficulty === "Hard"){
+    //     testPuzzle = hardPuzzles[random][1];
+    //     memo = hardPuzzles[random][0];
+    // }
     
-    else {
-        console.error("Difficulty Setting not found");
-        return;
-    }
+    // else {
+    //     console.error("Difficulty Setting not found");
+    //     return;
+    // }
+
+    testPuzzle  = testPuzzle2;
+    
     
     console.log("Puzzle solution : " + memo);
    
@@ -188,6 +192,7 @@ function startGame(){
     minutes = 0;
     hours = 0;
     completedCells = 0;
+    completionTime = 0;
     completionPercentage.innerHTML = 0;
     progressStatus.style.width = "0%";
     minTxt.innerHTML = "00";
@@ -224,7 +229,7 @@ function startTimer() {
    
     
     timeInterval = setInterval(function() {
-        
+        completionTime++;
         seconds++;
         if(seconds < 10){
             secTxt.innerHTML = "0" + seconds;
@@ -380,8 +385,9 @@ document.addEventListener("keydown", event => {
         case "Backspace" :
             erase();
             break;
-
-
+        case "Spacebar":
+            togglePause();
+            break;
         case "delete":
             erase();
             break;
@@ -456,7 +462,6 @@ function quitGame() {
         confirmationBar.style.display = "none"
      });
    
-    
    
 }
 
@@ -692,6 +697,8 @@ function checkCell (index, currValue, cell) {
         completedCells++;
         currEmptyCells--;
         if(currEmptyCells == 0){
+            console.log(completionTime);
+
             puzzleComplete();
         }
         var completionStatus = checkCompletion();
@@ -711,14 +718,28 @@ function checkCompletion() {
 
 //called when the puzzle has been completed
 function puzzleComplete() {
-
+    var newHighScore = saveScore(completionTime);  
     isGameOver = true;
     isPlaying = false;
     clearInterval(timeInterval);
 
     showMessage("Nice One! ", false);
-    parentGrid.innerHTML = '  <div class="game-over complete h-center">You are smarter than you look!<button class="restart-btn">Retry</button></div>'
+    var gameOverHtml = '  <div class="game-over complete h-center">You are smarter than you look!<button class="restart-btn">Retry</button>'
+
+
+    if(newHighScore) {
+        gameOverHtml += '<div>New High Score</div>';
+
+    }else {
+        gameOverHtml += '<div>You did okay</div>';
+
+    }
+    //Show the stats on the game
+
+    gameOverHtml 
+    += '</div>'
     listenToRestart();
+    parentGrid.innerHTML = gameOverHtml;
     console.log("Puzzle Complete")
 }
 

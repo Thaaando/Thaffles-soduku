@@ -1,7 +1,6 @@
 import { togglePause, getGameStatus } from "./script.js";
 
 
-var closeBtn = document.getElementById("close-settings-btn");
 
 var duplicateSwitch = document.getElementById("duplicate-switch");
 var highlightsSwitch = document.getElementById("highlights-switch");
