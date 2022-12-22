@@ -13,3 +13,4 @@ export function saveScore(currTime=0){
 export function getScore() {
     return window.localStorage.getItem("highScore");
 }
+
