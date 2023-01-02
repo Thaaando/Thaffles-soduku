@@ -81,7 +81,13 @@ function onInit () {
         }
     });
 
+
     siteColors.forEach((picker)=>{
+
+        if (picker.classList.contains("active")){
+            selectedTheme = picker;
+            setTheme();
+        }
         picker.addEventListener("click", ()=>{
 
             selectedTheme.classList.remove("active");

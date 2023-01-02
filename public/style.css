@@ -163,6 +163,7 @@ input::selection{
 
 body{
     background-color: #367eb8;
+    font-family: 'Inter', sans-serif;
 }
 
 .message-bar{
@@ -386,4 +387,21 @@ body{
 
   .function-btns{ 
     margin: 10px 0;
+  }
+
+  .btn{
+    border-radius: 10px;
+    padding: 10px 30px;
+    margin: 5px;
+    border: none;
+  }
+
+  .num-btn {
+    border-radius: 8px;
+    border: none;
+  }
+
+
+  .number-buttons {
+    max-width: 100vw;
   }

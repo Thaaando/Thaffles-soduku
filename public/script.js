@@ -143,23 +143,23 @@ function startGame(){
     
     console.log("Puzzle number : " + random);
 
-    // if(difficulty == "Easy") {
-    //     testPuzzle = easyPuzzles[random][1];
-    //     memo = easyPuzzles[random][0];   
-    // }else if(difficulty == "Medium" ){
-    //     testPuzzle = mediumPuzzles[random][1];
-    //     memo = mediumPuzzles[random][0];
-    // } else if(difficulty === "Hard"){
-    //     testPuzzle = hardPuzzles[random][1];
-    //     memo = hardPuzzles[random][0];
-    // }
+    if(difficulty == "Easy") {
+        testPuzzle = easyPuzzles[random][1];
+        memo = easyPuzzles[random][0];   
+    }else if(difficulty == "Medium" ){
+        testPuzzle = mediumPuzzles[random][1];
+        memo = mediumPuzzles[random][0];
+    } else if(difficulty === "Hard"){
+        testPuzzle = hardPuzzles[random][1];
+        memo = hardPuzzles[random][0];
+    }
     
-    // else {
-    //     console.error("Difficulty Setting not found");
-    //     return;
-    // }
+    else {
+        console.error("Difficulty Setting not found");
+        return;
+    }
+    // testPuzzle = testPuzzle2;
 
-    testPuzzle = testPuzzle2;
     console.log("Puzzle solution : " + memo);
    
     mistakes = 0;
@@ -368,6 +368,9 @@ document.addEventListener("keydown", event => {
         case "0"  :
             erase();
             break;
+        case "N" :
+            toggleNotes();
+            break;
         case "ArrowUp":   
             navigateToCell("up");
             break;
@@ -463,15 +466,7 @@ function quitGame() {
    
 }
 
-function listenToRestart(){
 
-    document.querySelectorAll(".restart-btn").forEach((restartBtn)=>{
-        restartBtn.addEventListener("click", ()=>{
-            startGame();
-        });
-    });
-    
-}
 
 
 
@@ -762,10 +757,26 @@ function puzzleComplete() {
 
     gameOverHtml 
     += '</div>'
-    listenToRestart();
     parentGrid.innerHTML = gameOverHtml;
+    listenToRestart();
     console.log("Puzzle Complete")
 }
+
+
+function listenToRestart(){
+    document.querySelectorAll(".restart-btn").forEach((restartBtn)=>{
+        restartBtn.addEventListener("click", ()=>{
+
+            startGame();
+        });
+    });
+    
+}
+
+function activateTheme(theme) {
+        
+}
+
 
 export function getGameStatus() {
     return isPlaying;
