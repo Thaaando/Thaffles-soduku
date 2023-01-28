@@ -3,21 +3,30 @@
 
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7807241132781597"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>   
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Thaffles</title>
+    <script src="https://kit.fontawesome.com/6fb391dc12.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
     <div class="toolbar">
         <div class="row space-between w-100">
+
+            <div class="quit-btn btn" id="quit-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
             <p class="title">Thaffles</p>
 
-            <button id="open-settings-btn" class="btn">Settings</button>
+            <div id="open-settings-btn" class="btn">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+
         </div>
         
     </div>
@@ -147,6 +156,11 @@
 
                 <div class="row timing">
 
+                    <div class="pause-btn" id="pause-btn">            
+                        <i class="fa-solid fa-pause"></i>
+                    </div>
+    
+
                     <p class="hours" id="hour-txt">01: </p>
                     <p class="minutes" id="min-txt"> 00 </p>
                     <p>:</p>
@@ -263,17 +277,17 @@
 
 
         <div class="col h-center">
-            <div class="function-btns">
-                <button class="quit-btn" id="quit-btn">Exit</button>
+            <div class="function-btns row">
+             
+            
 
-                <button class="pause-btn" id="pause-btn">Pause</button>
-
-
-                <button class="errase-btn" id="erase-btn">Erase</button>
-                <button class="note-btn" id="notes-btn">Notes :
-        
-                    <span id="notes-status">Off</span>
-                </button>
+                <div class="erase-btn" id="erase-btn">
+                    <i class="fa-solid fa-eraser"></i>
+                </div>
+                <div class="note-btn" id="notes-btn">
+                    <i class="fa-solid fa-pencil"></i>
+                </div>
+                
             </div>
 
             <div class="number-buttons">

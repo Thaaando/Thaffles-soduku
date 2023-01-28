@@ -30,7 +30,7 @@ var homeMenu = document.getElementById("home-menu");
 var difficultyTxt = document.getElementById("difficulty-txt");
 var completionPercentage = document.getElementById("completion-percentage");
 var progressStatus = document.getElementById("progress-status");
-var noteStatus = document.getElementById("notes-status");
+// var noteStatus = document.getElementById("notes-status");
 var confirmationBar = document.getElementById("confirmation-bar");
 
 var currEmptyCells = 0;
@@ -118,6 +118,7 @@ function initApp() {
 pauseBtn.forEach((btn)=>{
     btn.addEventListener("click", ()=>{
         togglePause();
+
     });
 })
 
@@ -473,15 +474,20 @@ function quitGame() {
 
 
 export function togglePause() {
+
     isPaused = !isPaused;
 
     if(isPaused){
+        document.getElementById("pause-btn").innerHTML = '<i class="fa-solid fa-play"></i>';
+
         console.log("Game Paused");
         pauseMenu.style.display = "block";
         parentGrid.style.display = "none";
         // parentGrid.innerHTML = '  <div class="game-over h-center">Paused!<button class="number-btn" onclick="togglePause()">Resume</button></div>'
         clearInterval(timeInterval);
     }else{
+        document.getElementById("pause-btn").innerHTML = '<i class="fa-solid fa-pause"></i>';
+
         console.log("Game resumed");
         pauseMenu.style.display = "none";
         parentGrid.style.display = "block";
@@ -552,12 +558,12 @@ function setValue(number) {
 
 function toggleNotes() {
     isNotes = !isNotes;
-    if(isNotes){
-        noteStatus.innerHTML = "On";
+    // if(isNotes){
+    //     noteStatus.innerHTML = "On";
 
-    }else {
-        noteStatus.innerHTML = "Off"
-    }
+    // }else {
+    //     noteStatus.innerHTML = "Off"
+    // }
 }
 
 function erase() {

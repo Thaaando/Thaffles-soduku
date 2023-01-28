@@ -1,3 +1,13 @@
+body {
+  width: 100vw;
+  max-width: 100vw;
+
+}
+
+
+.pause-btn {
+  margin: auto 10px;
+}
 
 #game-screen {
     display: none;
@@ -386,7 +396,7 @@ body{
   }
 
   .function-btns{ 
-    margin: 10px 0;
+    margin: 10px auto;
   }
 
   .btn{
